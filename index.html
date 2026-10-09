@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arroz David Garibay | Calidad y Tradición 🌾</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primaryRed: '#ff0000',
+                        midnight: '#1f2126',
+                        mustard: '#f2b63d',
+                        pureWhite: '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2126;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f2b63d;
+            border-radius: 4px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2126;
+        }
+    </style>
+</head>
+<body class="bg-pureWhite text-midnight antialiased selection:bg-mustard selection:text-midnight">
+
+    <header class="sticky top-0 z-50 bg-midnight text-pureWhite shadow-xl border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-xl bg-primaryRed flex items-center justify-center text-pureWhite font-black text-2xl shadow-lg group-hover:scale-105 transition-transform">
+                    DG
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg sm:text-xl font-black tracking-wider uppercase text-pureWhite">David Garibay</span>
+                    <span class="text-[10px] text-mustard tracking-widest uppercase font-bold">🌾 Calidad Garantizada 🌾</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#inicio" class="hover:text-mustard transition-colors">Inicio</a>
+                <a href="#catalogo" class="hover:text-mustard transition-colors">Catálogo</a>
+                <a href="#nosotros" class="hover:text-mustard transition-colors">Nosotros</a>
+                <a href="#contacto" class="hover:text-mustard transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Molino Contact & Cart Actions -->
+            <div class="flex items-center space-x-4">
+                <a href="tel:926198337" class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-800 border border-gray-700 px-3.5 py-2 rounded-xl text-xs font-semibold text-pureWhite transition-all">
+                    <i class="fa-solid fa-industry text-mustard"></i>
+                    <span>Molino: 926 198 337</span>
+                </a>
+                
+                <!-- Cart Button -->
+                <button id="cart-btn" class="relative bg-primaryRed hover:bg-red-700 text-pureWhite p-3 rounded-full transition-all flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-mustard">
+                    <i class="fa-solid fa-cart-shopping text-base"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-mustard text-midnight text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md scale-100 transition-transform">0</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-pureWhite focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-midnight border-t border-gray-800 px-4 pt-3 pb-6 space-y-3">
+            <a href="#inicio" class="block py-2 text-pureWhite hover:text-mustard font-medium">Inicio</a>
+            <a href="#catalogo" class="block py-2 text-pureWhite hover:text-mustard font-medium">Catálogo de Productos</a>
+            <a href="#nosotros" class="block py-2 text-pureWhite hover:text-mustard font-medium">Nosotros</a>
+            <a href="#contacto" class="block py-2 text-pureWhite hover:text-mustard font-medium">Contacto y Pedidos</a>
+            <div class="pt-2 border-t border-gray-800 flex items-center space-x-2 text-xs text-mustard font-semibold">
+                <i class="fa-solid fa-industry"></i>
+                <span>Molino: 926 198 337</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="relative bg-midnight text-pureWhite overflow-hidden py-20 lg:py-28">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f2b63d_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 bg-gray-800/90 border border-gray-700 px-4 py-2 rounded-full text-xs font-bold tracking-wider text-mustard uppercase shadow-sm">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    <span>Arroz Selecto Directo del Molino</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                    El Mejor Arroz <br><span class="text-primaryRed">David Garibay</span>
+                </h1>
+                <p class="text-gray-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                    Granos seleccionados con la más alta calidad para tu hogar y negocio. Sabor inigualable, textura perfecta y frescura garantizada en cada presentación.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+                    <a href="#catalogo" class="w-full sm:w-auto bg-primaryRed hover:bg-red-700 text-pureWhite font-bold px-8 py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 text-center flex items-center justify-center space-x-2">
+                        <span>Ver Catálogo Completo</span>
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <a href="https://wa.me/51986389251?text=Hola%20David%20Garibay,%20deseo%20realizar%20un%20pedido%20de%20arroz." target="_blank" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-pureWhite font-bold px-8 py-4 rounded-xl shadow-xl transition-all text-center flex items-center justify-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Pedir por WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="relative w-full max-w-md bg-pureWhite p-8 rounded-3xl shadow-2xl border border-gray-200 text-midnight transform hover:scale-[1.02] transition-transform duration-300">
+                    <span class="absolute top-4 right-4 bg-primaryRed text-pureWhite text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-md">Destacado</span>
+                    <div class="h-64 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100 overflow-hidden relative">
+                        <img src="https://placehold.co/350x350/ffffff/1f2126?text=Arroz+David+Garibay" alt="Arroz David Garibay" class="h-56 object-contain">
+                    </div>
+                    <div class="space-y-2 text-center">
+                        <h3 class="text-xl font-black text-midnight">P.D. Rojo Especial</h3>
+                        <p class="text-xs text-gray-500">Grano superior seleccionado rigurosamente.</p>
+                        <div class="text-3xl font-black text-primaryRed pt-1">S/. 165.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalogo" class="py-20 bg-pureWhite">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-primaryRed uppercase tracking-widest text-xs font-black">Nuestra Variedad Oficial</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-midnight tracking-tight">Catálogo de Arroz David Garibay</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Selecciona tus variedades favoritas y arma tu pedido al instante para solicitarlo vía WhatsApp.</p>
+                <div class="w-24 h-1.5 bg-mustard mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Product 1 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Premium</span>
+                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=P.D.+Rojo" alt="P.D. Rojo" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">P.D. Rojo</h3>
+                            <p class="text-gray-500 text-xs mt-1">Calidad superior garantizada para alta cocina y uso familiar.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
+                            <button onclick="addToCart('P.D. Rojo', 165.00, 'https://placehold.co/300x320/ffffff/ff0000?text=P.D.+Rojo')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Selección</span>
+                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=P.D.+Naranja" alt="P.D. Naranja" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">P.D. Naranja</h3>
+                            <p class="text-gray-500 text-xs mt-1">Grano seleccionado con excelente rendimiento y sabor tradicional.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 155.00</span>
+                            <button onclick="addToCart('P.D. Naranja', 155.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=P.D.+Naranja')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-blue-600 text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Especial</span>
+                        <img src="https://placehold.co/300x320/ffffff/2563eb?text=P.D.+Azul" alt="P.D. Azul" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">P.D. Azul</h3>
+                            <p class="text-gray-500 text-xs mt-1">Granos de primera calidad ideales para preparaciones exigentes.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 170.00</span>
+                            <button onclick="addToCart('P.D. Azul', 170.00, 'https://placehold.co/300x320/ffffff/2563eb?text=P.D.+Azul')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Añejo</span>
+                        <img src="https://placehold.co/300x320/ffffff/1f2126?text=P.D.+Añejo" alt="P.D. Añejo" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">P.D. Añejo</h3>
+                            <p class="text-gray-500 text-xs mt-1">Arroz añejado para conseguir máxima consistencia y granos bien sueltos.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 190.00</span>
+                            <button onclick="addToCart('P.D. Añejo', 190.00, 'https://placehold.co/300x320/ffffff/1f2126?text=P.D.+Añejo')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Popular</span>
+                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=Caserita+Amarilla" alt="Caserita Amarilla" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla</h3>
+                            <p class="text-gray-500 text-xs mt-1">La favorita de los hogares, gran sabor y rendimiento insuperable.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 140.00</span>
+                            <button onclick="addToCart('Caserita Amarilla', 140.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=Caserita+Amarilla')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Filtro</span>
+                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=Caserita+Amarilla+F." alt="Caserita Amarilla F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla F.</h3>
+                            <p class="text-gray-500 text-xs mt-1">Versión con doble filtrado y selección estricta de granos limpios.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 150.00</span>
+                            <button onclick="addToCart('Caserita Amarilla F.', 150.00, 'https://placehold.co/300x320/ffffff/ff0000?text=Caserita+Amarilla+F.')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Laminado</span>
+                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=Laminado+F." alt="Caserita Amarilla Laminado F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla Laminado F.</h3>
+                            <p class="text-gray-500 text-xs mt-1">Grano laminado y procesado con tecnología de punta.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
+                            <button onclick="addToCart('Caserita Amarilla Laminado F.', 165.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=Laminado+F.')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
+                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
+                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Exclusivo</span>
+                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=Cholita+Fucsia" alt="Cholita Fucsia F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-midnight">Cholita Fucsia F.</h3>
+                            <p class="text-gray-500 text-xs mt-1">Tradición y calidad garantizada en cada grano seleccionado.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
+                            <button onclick="addToCart('Cholita Fucsia F.', 165.00, 'https://placehold.co/300x320/ffffff/ff0000?text=Cholita+Fucsia')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="nosotros" class="py-20 bg-midnight text-pureWhite border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div class="inline-flex items-center space-x-2 bg-gray-800 border border-gray-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider text-mustard uppercase">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Tradición Molinera</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Acerca de David Garibay</h2>
+                <p class="text-gray-300 text-base leading-relaxed">
+                    Somos una empresa dedicada con pasión al procesamiento y distribución de arroz de calidad superior. Nuestro compromiso con el campo y la tecnología molinera asegura que cada presentación mantenga los más altos estándares de pureza, blancura y excelente cocción.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-2">
+                    <div class="border-l-2 border-mustard pl-4">
+                        <div class="text-2xl font-black text-mustard">100%</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider mt-1">Granos Seleccionados</div>
+                    </div>
+                    <div class="border-l-2 border-primaryRed pl-4">
+                        <div class="text-2xl font-black text-primaryRed">Directo</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider mt-1">Del Molino a tu Mesa</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-800/80 p-8 rounded-3xl border border-gray-700 shadow-2xl space-y-6">
+                <h3 class="text-xl font-bold text-pureWhite flex items-center space-x-3">
+                    <i class="fa-solid fa-phone-volume text-mustard"></i>
+                    <span>Atención Directa y Pedidos</span>
+                </h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Realiza tus pedidos al por mayor y menor comunicándote directamente con nosotros. Garantizamos entregas puntuales y atención personalizada.
+                </p>
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center justify-between bg-midnight p-4 rounded-xl border border-gray-700">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-green-600/20 text-green-400 flex items-center justify-center font-bold">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs text-gray-400 uppercase font-bold">David (Pedidos & WhatsApp)</h4>
+                                <p class="text-sm font-black text-pureWhite">986 389 251</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/51986389251" target="_blank" class="bg-green-600 hover:bg-green-700 text-pureWhite text-xs font-bold px-3 py-2 rounded-lg transition-colors">Contactar</a>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-midnight p-4 rounded-xl border border-gray-700">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-mustard/20 text-mustard flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-industry text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs text-gray-400 uppercase font-bold">Molino</h4>
+                                <p class="text-sm font-black text-pureWhite">926 198 337</p>
+                            </div>
+                        </div>
+                        <a href="tel:926198337" class="bg-mustard hover:bg-amber-500 text-midnight text-xs font-bold px-3 py-2 rounded-lg transition-colors">Llamar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-sidebar-overlay" class="fixed inset-0 bg-midnight/70 backdrop-blur-sm z-50 hidden transition-opacity opacity-0"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-pureWhite text-midnight z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 bg-midnight text-pureWhite flex items-center justify-between border-b border-gray-800">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-cart-shopping text-mustard"></i>
+                <h3 class="font-bold text-lg">Tu Carrito de Pedido</h3>
+            </div>
+            <button id="close-cart-btn" class="text-gray-400 hover:text-pureWhite p-2 focus:outline-none">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4 divide-y divide-gray-100">
+            <div id="empty-cart-message" class="text-center py-20 text-gray-400 space-y-3">
+                <i class="fa-solid fa-basket-shopping text-4xl text-gray-300"></i>
+                <p class="text-sm">Tu carrito está vacío.</p>
+            </div>
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200 space-y-4">
+            <div class="flex items-center justify-between text-base">
+                <span class="text-gray-600 font-medium">Total Estimado:</span>
+                <span id="cart-total" class="font-black text-xl text-primaryRed">S/. 0.00</span>
+            </div>
+            <button onclick="sendWhatsAppOrder()" class="w-full bg-green-600 hover:bg-green-700 text-pureWhite font-bold py-4 rounded-xl transition-all shadow-xl text-center flex items-center justify-center space-x-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Enviar pedido por WhatsApp</span>
+            </button>
+            <p class="text-[10px] text-center text-gray-500">El pedido se enviará directamente al número de David (986 389 251).</p>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/51986389251?text=Hola%20David%20Garibay,%20deseo%20realizar%20una%20consulta%20sobre%20sus%20arroces." target="_blank" class="fixed bottom-6 right-6 z-40 bg-green-600 hover:bg-green-700 text-pureWhite w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition-all transform hover:scale-110 focus:outline-none" title="Contactar con David">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer id="contacto" class="bg-midnight text-pureWhite border-t border-gray-800 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-primaryRed flex items-center justify-center text-pureWhite font-black text-xl">
+                        DG
+                    </div>
+                    <span class="text-lg font-black tracking-wider uppercase">David Garibay</span>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    Productor y distribuidor de arroz de calidad superior. Lleve el mejor grano a su mesa o negocio al mejor precio.
+                </p>
+                <div class="flex space-x-3 pt-2">
+                    <a href="#" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-mustard hover:text-midnight transition-colors flex items-center justify-center text-pureWhite">
+                        <i class="fa-brands fa-facebook-f text-xs"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-mustard hover:text-midnight transition-colors flex items-center justify-center text-pureWhite">
+                        <i class="fa-brands fa-instagram text-xs"></i>
+                    </a>
+                    <a href="https://wa.me/51986389251" target="_blank" class="w-9 h-9 rounded-full bg-green-600 hover:bg-green-700 transition-colors flex items-center justify-center text-pureWhite">
+                        <i class="fa-brands fa-whatsapp text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm uppercase tracking-wider text-mustard">Números de Contacto</h4>
+                <div class="space-y-2 text-xs text-gray-300">
+                    <p class="flex items-center space-x-2">
+                        <i class="fa-solid fa-user text-primaryRed"></i>
+                        <span><strong>David:</strong> 986 389 251</span>
+                    </p>
+                    <p class="flex items-center space-x-2">
+                        <i class="fa-solid fa-industry text-mustard"></i>
+                        <span><strong>Molino:</strong> 926 198 337</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-bold text-sm uppercase tracking-wider text-mustard">Enlaces Rápidos</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><a href="#inicio" class="hover:text-pureWhite transition-colors">Inicio</a></li>
+                    <li><a href="#catalogo" class="hover:text-pureWhite transition-colors">Catálogo de Productos</a></li>
+                    <li><a href="#nosotros" class="hover:text-pureWhite transition-colors">Acerca de Nosotros</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-gray-800/80 text-center text-xs text-gray-500">
+            <p>&copy; 2026 Arroz David Garibay 🌾🌾🌾. Todos los derechos reservados. Calidad y Confianza.</p>
+        </div>
+    </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 left-6 bg-midnight text-pureWhite px-6 py-3 rounded-xl shadow-2xl border border-gray-700 transform -translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-mustard text-lg"></i>
+        <span id="toast-message" class="text-xs font-semibold">Producto añadido al carrito</span>
+    </div>
+
+    <script>
+        // Shopping Cart State
+        let cart = [];
+
+        // DOM Elements
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartSidebarOverlay = document.getElementById('cart-sidebar-overlay');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const cartBadge = document.getElementById('cart-badge');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotal = document.getElementById('cart-total');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Toggle Mobile Menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Open & Close Cart Sidebar
+        function openCart() {
+            cartSidebar.classList.remove('translate-x-full');
+            cartSidebarOverlay.classList.remove('hidden');
+            setTimeout(() => cartSidebarOverlay.classList.remove('opacity-0'), 10);
+        }
+
+        function closeCart() {
+            cartSidebar.classList.add('translate-x-full');
+            cartSidebarOverlay.classList.add('opacity-0');
+            setTimeout(() => cartSidebarOverlay.classList.add('hidden'), 300);
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartSidebarOverlay.addEventListener('click', closeCart);
+
+        // Show Toast Notification
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.remove('-translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('-translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Add Product to Cart
+        function addToCart(name, price, image) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, image, quantity: 1 });
+            }
+            updateCartUI();
+            showToast(`¡${name} añadido al carrito!`);
+        }
+
+        // Update Quantity
+        function changeQuantity(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // Remove Item
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Update Cart UI
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalItems;
+            
+            cartBadge.classList.add('scale-125');
+            setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div id="empty-cart-message" class="text-center py-20 text-gray-400 space-y-3">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-gray-300"></i>
+                        <p class="text-sm">Tu carrito está vacío.</p>
+                    </div>
+                `;
+                cartTotal.textContent = 'S/. 0.00';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex items-center space-x-4 py-4';
+                itemEl.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain bg-gray-50 rounded-xl p-2 border border-gray-100">
+                    <div class="flex-grow space-y-1">
+                        <h4 class="text-xs font-bold text-midnight line-clamp-1">${item.name}</h4>
+                        <div class="text-xs text-primaryRed font-black">S/. ${item.price.toFixed(2)}</div>
+                        <div class="flex items-center space-x-2 pt-1">
+                            <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-midnight flex items-center justify-center font-bold text-xs">-</button>
+                            <span class="text-xs font-bold text-midnight">${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-midnight flex items-center justify-center font-bold text-xs">+</button>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-primaryRed p-2 text-xs transition-colors">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                `;
+                cartItemsContainer.appendChild(itemEl);
+            });
+
+            cartTotal.textContent = `S/. ${total.toFixed(2)}`;
+        }
+
+        // Send Order via WhatsApp
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                showToast('Tu carrito está vacío para enviar un pedido.');
+                return;
+            }
+
+            let message = "Hola David Garibay 🌾, deseo realizar el siguiente pedido:\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                let sub = item.price * item.quantity;
+                total += sub;
+                message += `• ${item.quantity}x ${item.name} - S/. ${sub.toFixed(2)}\n`;
+            });
+
+            message += `\n*Total a Pagar: S/. ${total.toFixed(2)}*\n\nPor favor, confirmarme el envío. ¡Gracias!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/51986389251?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
+```
