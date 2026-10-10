@@ -1,664 +1,659 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arroz David Garibay | Calidad y Tradición 🌾</title>
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TIENDOO - Arroz Peruano</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primaryRed: '#ff0000',
-                        midnight: '#1f2126',
-                        mustard: '#f2b63d',
-                        pureWhite: '#ffffff',
+                        lightbg: '#F8FAFC',
+                        cardbg: '#FFFFFF',
+                        cardborder: '#E2E8F0',
+                        textdark: '#09090B',
+                        textmuted: '#71717A',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
+                        'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 10px 15px -5px rgba(0, 0, 0, 0.04)',
+                        'modal': '0 25px 50px -12px rgba(0, 0, 0, 0.18)'
                     }
                 }
             }
         }
     </script>
-    
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2126;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #f2b63d;
-            border-radius: 4px;
-        }
         body {
+            background-color: #F8FAFC;
+            color: #09090B;
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #1f2126;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        .custom-toast {
+            animation: fadeIn 0.3s ease-out forwards;
         }
     </style>
 </head>
-<body class="bg-pureWhite text-midnight antialiased selection:bg-mustard selection:text-midnight">
+<body class="bg-lightbg text-textdark min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
-    <header class="sticky top-0 z-50 bg-midnight text-pureWhite shadow-xl border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center space-x-3 group">
-                <div class="w-11 h-11 rounded-xl bg-primaryRed flex items-center justify-center text-pureWhite font-black text-2xl shadow-lg group-hover:scale-105 transition-transform">
-                    DG
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-lg sm:text-xl font-black tracking-wider uppercase text-pureWhite">David Garibay</span>
-                    <span class="text-[10px] text-mustard tracking-widest uppercase font-bold">🌾 Calidad Garantizada 🌾</span>
-                </div>
-            </a>
+    <!-- Sistema de Notificaciones Internas -->
+    <div id="toastContainer" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2 w-11/12 max-w-sm"></div>
 
-            <!-- Navigation Links (Desktop) -->
-            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
-                <a href="#inicio" class="hover:text-mustard transition-colors">Inicio</a>
-                <a href="#catalogo" class="hover:text-mustard transition-colors">Catálogo</a>
-                <a href="#nosotros" class="hover:text-mustard transition-colors">Nosotros</a>
-                <a href="#contacto" class="hover:text-mustard transition-colors">Contacto</a>
-            </nav>
-
-            <!-- Molino Contact & Cart Actions -->
-            <div class="flex items-center space-x-4">
-                <a href="tel:926198337" class="hidden lg:flex items-center space-x-2 bg-gray-800/80 hover:bg-gray-800 border border-gray-700 px-3.5 py-2 rounded-xl text-xs font-semibold text-pureWhite transition-all">
-                    <i class="fa-solid fa-industry text-mustard"></i>
-                    <span>Molino: 926 198 337</span>
-                </a>
-                
-                <!-- Cart Button -->
-                <button id="cart-btn" class="relative bg-primaryRed hover:bg-red-700 text-pureWhite p-3 rounded-full transition-all flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-mustard">
-                    <i class="fa-solid fa-cart-shopping text-base"></i>
-                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-mustard text-midnight text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md scale-100 transition-transform">0</span>
-                </button>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-pureWhite focus:outline-none p-2">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
+    <!-- Cabecera Minimalista -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-cardborder px-4 py-3.5 shadow-elegant">
+        <div class="flex items-center justify-between max-w-xl mx-auto">
+            <div>
+                <h1 class="text-base font-black tracking-wider text-textdark">TIENDOO<span class="text-textmuted">.</span></h1>
             </div>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-midnight border-t border-gray-800 px-4 pt-3 pb-6 space-y-3">
-            <a href="#inicio" class="block py-2 text-pureWhite hover:text-mustard font-medium">Inicio</a>
-            <a href="#catalogo" class="block py-2 text-pureWhite hover:text-mustard font-medium">Catálogo de Productos</a>
-            <a href="#nosotros" class="block py-2 text-pureWhite hover:text-mustard font-medium">Nosotros</a>
-            <a href="#contacto" class="block py-2 text-pureWhite hover:text-mustard font-medium">Contacto y Pedidos</a>
-            <div class="pt-2 border-t border-gray-800 flex items-center space-x-2 text-xs text-mustard font-semibold">
-                <i class="fa-solid fa-industry"></i>
-                <span>Molino: 926 198 337</span>
-            </div>
+            <!-- Botón de bolsa de compras superior -->
+            <button onclick="openCartModal()" id="headerCartBtn" class="relative bg-cardbg hover:bg-gray-50 text-textdark px-3.5 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 border border-cardborder shadow-elegant cursor-pointer">
+                <i class="fa-solid fa-bag-shopping text-textdark text-xs"></i>
+                <span id="headerSelectedCount" class="font-black">0</span>
+            </button>
         </div>
     </header>
 
-    <section id="inicio" class="relative bg-midnight text-pureWhite overflow-hidden py-20 lg:py-28">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f2b63d_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6 text-center lg:text-left">
-                <div class="inline-flex items-center space-x-2 bg-gray-800/90 border border-gray-700 px-4 py-2 rounded-full text-xs font-bold tracking-wider text-mustard uppercase shadow-sm">
-                    <i class="fa-solid fa-wheat-awn"></i>
-                    <span>Arroz Selecto Directo del Molino</span>
-                </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                    El Mejor Arroz <br><span class="text-primaryRed">David Garibay</span>
-                </h1>
-                <p class="text-gray-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
-                    Granos seleccionados con la más alta calidad para tu hogar y negocio. Sabor inigualable, textura perfecta y frescura garantizada en cada presentación.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
-                    <a href="#catalogo" class="w-full sm:w-auto bg-primaryRed hover:bg-red-700 text-pureWhite font-bold px-8 py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 text-center flex items-center justify-center space-x-2">
-                        <span>Ver Catálogo Completo</span>
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </a>
-                    <a href="https://wa.me/51986389251?text=Hola%20David%20Garibay,%20deseo%20realizar%20un%20pedido%20de%20arroz." target="_blank" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-pureWhite font-bold px-8 py-4 rounded-xl shadow-xl transition-all text-center flex items-center justify-center space-x-2">
-                        <i class="fa-brands fa-whatsapp text-lg"></i>
-                        <span>Pedir por WhatsApp</span>
-                    </a>
+    <!-- Resumen Superior Monocromático -->
+    <section class="max-w-xl mx-auto w-full px-4 pt-4 pb-1">
+        <div class="bg-cardbg border border-cardborder rounded-2xl p-4 shadow-elegant flex items-center justify-between">
+            <div>
+                <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted block">Resumen del Pedido 🇵🇪</span>
+                <div class="flex items-baseline gap-2 mt-0.5">
+                    <span id="calcTotalItems" class="text-xl font-black text-textdark">0</span>
+                    <span class="text-xs font-semibold text-textmuted">productos añadidos</span>
                 </div>
             </div>
-            <div class="flex justify-center">
-                <div class="relative w-full max-w-md bg-pureWhite p-8 rounded-3xl shadow-2xl border border-gray-200 text-midnight transform hover:scale-[1.02] transition-transform duration-300">
-                    <span class="absolute top-4 right-4 bg-primaryRed text-pureWhite text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-md">Destacado</span>
-                    <div class="h-64 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100 overflow-hidden relative">
-                        <img src="https://placehold.co/350x350/ffffff/1f2126?text=Arroz+David+Garibay" alt="Arroz David Garibay" class="h-56 object-contain">
-                    </div>
-                    <div class="space-y-2 text-center">
-                        <h3 class="text-xl font-black text-midnight">P.D. Rojo Especial</h3>
-                        <p class="text-xs text-gray-500">Grano superior seleccionado rigurosamente.</p>
-                        <div class="text-3xl font-black text-primaryRed pt-1">S/. 165.00</div>
-                    </div>
-                </div>
+            <div class="text-right bg-lightbg px-4 py-2.5 rounded-xl border border-cardborder shadow-elegant">
+                <span class="text-[9px] uppercase font-bold text-textmuted block">Total Estimado</span>
+                <span id="calcTotalPrice" class="text-base font-black text-textdark">S/ 0.00</span>
             </div>
         </div>
     </section>
 
-    <section id="catalogo" class="py-20 bg-pureWhite">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                <span class="text-primaryRed uppercase tracking-widest text-xs font-black">Nuestra Variedad Oficial</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-midnight tracking-tight">Catálogo de Arroz David Garibay</h2>
-                <p class="text-gray-600 text-base sm:text-lg">Selecciona tus variedades favoritas y arma tu pedido al instante para solicitarlo vía WhatsApp.</p>
-                <div class="w-24 h-1.5 bg-mustard mx-auto rounded-full"></div>
-            </div>
-
-            <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                
-                <!-- Product 1 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Premium</span>
-                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=P.D.+Rojo" alt="P.D. Rojo" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">P.D. Rojo</h3>
-                            <p class="text-gray-500 text-xs mt-1">Calidad superior garantizada para alta cocina y uso familiar.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
-                            <button onclick="addToCart('P.D. Rojo', 165.00, 'https://placehold.co/300x320/ffffff/ff0000?text=P.D.+Rojo')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Selección</span>
-                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=P.D.+Naranja" alt="P.D. Naranja" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">P.D. Naranja</h3>
-                            <p class="text-gray-500 text-xs mt-1">Grano seleccionado con excelente rendimiento y sabor tradicional.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 155.00</span>
-                            <button onclick="addToCart('P.D. Naranja', 155.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=P.D.+Naranja')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-blue-600 text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Especial</span>
-                        <img src="https://placehold.co/300x320/ffffff/2563eb?text=P.D.+Azul" alt="P.D. Azul" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">P.D. Azul</h3>
-                            <p class="text-gray-500 text-xs mt-1">Granos de primera calidad ideales para preparaciones exigentes.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 170.00</span>
-                            <button onclick="addToCart('P.D. Azul', 170.00, 'https://placehold.co/300x320/ffffff/2563eb?text=P.D.+Azul')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Añejo</span>
-                        <img src="https://placehold.co/300x320/ffffff/1f2126?text=P.D.+Añejo" alt="P.D. Añejo" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">P.D. Añejo</h3>
-                            <p class="text-gray-500 text-xs mt-1">Arroz añejado para conseguir máxima consistencia y granos bien sueltos.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 190.00</span>
-                            <button onclick="addToCart('P.D. Añejo', 190.00, 'https://placehold.co/300x320/ffffff/1f2126?text=P.D.+Añejo')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Popular</span>
-                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=Caserita+Amarilla" alt="Caserita Amarilla" class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla</h3>
-                            <p class="text-gray-500 text-xs mt-1">La favorita de los hogares, gran sabor y rendimiento insuperable.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 140.00</span>
-                            <button onclick="addToCart('Caserita Amarilla', 140.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=Caserita+Amarilla')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Filtro</span>
-                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=Caserita+Amarilla+F." alt="Caserita Amarilla F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla F.</h3>
-                            <p class="text-gray-500 text-xs mt-1">Versión con doble filtrado y selección estricta de granos limpios.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 150.00</span>
-                            <button onclick="addToCart('Caserita Amarilla F.', 150.00, 'https://placehold.co/300x320/ffffff/ff0000?text=Caserita+Amarilla+F.')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 7 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-mustard text-midnight text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Laminado</span>
-                        <img src="https://placehold.co/300x320/ffffff/f2b63d?text=Laminado+F." alt="Caserita Amarilla Laminado F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">Caserita Amarilla Laminado F.</h3>
-                            <p class="text-gray-500 text-xs mt-1">Grano laminado y procesado con tecnología de punta.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
-                            <button onclick="addToCart('Caserita Amarilla Laminado F.', 165.00, 'https://placehold.co/300x320/ffffff/f2b63d?text=Laminado+F.')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 8 -->
-                <div class="bg-pureWhite border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden group">
-                    <div class="relative bg-gray-50 p-6 flex items-center justify-center h-56 overflow-hidden border-b border-gray-100">
-                        <span class="absolute top-3 left-3 bg-primaryRed text-pureWhite text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Exclusivo</span>
-                        <img src="https://placehold.co/300x320/ffffff/ff0000?text=Cholita+Fucsia" alt="Cholita Fucsia F." class="h-44 object-contain group-hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                        <div>
-                            <div class="flex items-center space-x-1 text-mustard text-xs mb-1">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-midnight">Cholita Fucsia F.</h3>
-                            <p class="text-gray-500 text-xs mt-1">Tradición y calidad garantizada en cada grano seleccionado.</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <span class="text-xl font-black text-primaryRed">S/. 165.00</span>
-                            <button onclick="addToCart('Cholita Fucsia F.', 165.00, 'https://placehold.co/300x320/ffffff/ff0000?text=Cholita+Fucsia')" class="bg-primaryRed hover:bg-red-700 text-pureWhite font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center space-x-2">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Añadir</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="nosotros" class="py-20 bg-midnight text-pureWhite border-t border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <div class="inline-flex items-center space-x-2 bg-gray-800 border border-gray-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wider text-mustard uppercase">
-                    <i class="fa-solid fa-award"></i>
-                    <span>Tradición Molinera</span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Acerca de David Garibay</h2>
-                <p class="text-gray-300 text-base leading-relaxed">
-                    Somos una empresa dedicada con pasión al procesamiento y distribución de arroz de calidad superior. Nuestro compromiso con el campo y la tecnología molinera asegura que cada presentación mantenga los más altos estándares de pureza, blancura y excelente cocción.
-                </p>
-                <div class="grid grid-cols-2 gap-6 pt-2">
-                    <div class="border-l-2 border-mustard pl-4">
-                        <div class="text-2xl font-black text-mustard">100%</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-wider mt-1">Granos Seleccionados</div>
-                    </div>
-                    <div class="border-l-2 border-primaryRed pl-4">
-                        <div class="text-2xl font-black text-primaryRed">Directo</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-wider mt-1">Del Molino a tu Mesa</div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-800/80 p-8 rounded-3xl border border-gray-700 shadow-2xl space-y-6">
-                <h3 class="text-xl font-bold text-pureWhite flex items-center space-x-3">
-                    <i class="fa-solid fa-phone-volume text-mustard"></i>
-                    <span>Atención Directa y Pedidos</span>
-                </h3>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                    Realiza tus pedidos al por mayor y menor comunicándote directamente con nosotros. Garantizamos entregas puntuales y atención personalizada.
-                </p>
-                <div class="space-y-3 pt-2">
-                    <div class="flex items-center justify-between bg-midnight p-4 rounded-xl border border-gray-700">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-green-600/20 text-green-400 flex items-center justify-center font-bold">
-                                <i class="fa-brands fa-whatsapp text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs text-gray-400 uppercase font-bold">David (Pedidos & WhatsApp)</h4>
-                                <p class="text-sm font-black text-pureWhite">986 389 251</p>
-                            </div>
-                        </div>
-                        <a href="https://wa.me/51986389251" target="_blank" class="bg-green-600 hover:bg-green-700 text-pureWhite text-xs font-bold px-3 py-2 rounded-lg transition-colors">Contactar</a>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-midnight p-4 rounded-xl border border-gray-700">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-mustard/20 text-mustard flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-industry text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs text-gray-400 uppercase font-bold">Molino</h4>
-                                <p class="text-sm font-black text-pureWhite">926 198 337</p>
-                            </div>
-                        </div>
-                        <a href="tel:926198337" class="bg-mustard hover:bg-amber-500 text-midnight text-xs font-bold px-3 py-2 rounded-lg transition-colors">Llamar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div id="cart-sidebar-overlay" class="fixed inset-0 bg-midnight/70 backdrop-blur-sm z-50 hidden transition-opacity opacity-0"></div>
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-pureWhite text-midnight z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-        <div class="p-6 bg-midnight text-pureWhite flex items-center justify-between border-b border-gray-800">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-cart-shopping text-mustard"></i>
-                <h3 class="font-bold text-lg">Tu Carrito de Pedido</h3>
-            </div>
-            <button id="close-cart-btn" class="text-gray-400 hover:text-pureWhite p-2 focus:outline-none">
-                <i class="fa-solid fa-xmark text-xl"></i>
+    <!-- Categorías Numeradas (Scroll Horizontal) -->
+    <section class="max-w-xl mx-auto w-full px-4 py-3">
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            <button onclick="filterCategory('todos')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-textdark text-white shadow-elegant flex-shrink-0 cursor-pointer">
+                Todas (08)
+            </button>
+            <button onclick="filterCategory('Cat 01')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+                Categoría 01 (3)
+            </button>
+            <button onclick="filterCategory('Cat 02')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+                Categoría 02 (2)
+            </button>
+            <button onclick="filterCategory('Cat 03')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+                Categoría 03 (3)
             </button>
         </div>
+    </section>
 
-        <!-- Cart Items Container -->
-        <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4 divide-y divide-gray-100">
-            <div id="empty-cart-message" class="text-center py-20 text-gray-400 space-y-3">
-                <i class="fa-solid fa-basket-shopping text-4xl text-gray-300"></i>
-                <p class="text-sm">Tu carrito está vacío.</p>
-            </div>
+    <!-- Cuadrícula de Productos (2 Columnas) -->
+    <main class="max-w-xl mx-auto w-full px-4 py-1.5 flex-1 mb-6">
+        <div id="productGrid" class="grid grid-cols-2 gap-3.5">
+            <!-- Inyectado por JavaScript -->
         </div>
+    </main>
 
-        <!-- Cart Footer -->
-        <div class="p-6 bg-gray-50 border-t border-gray-200 space-y-4">
-            <div class="flex items-center justify-between text-base">
-                <span class="text-gray-600 font-medium">Total Estimado:</span>
-                <span id="cart-total" class="font-black text-xl text-primaryRed">S/. 0.00</span>
-            </div>
-            <button onclick="sendWhatsAppOrder()" class="w-full bg-green-600 hover:bg-green-700 text-pureWhite font-bold py-4 rounded-xl transition-all shadow-xl text-center flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-whatsapp text-lg"></i>
-                <span>Enviar pedido por WhatsApp</span>
+    <!-- Modal de Detalle de Producto -->
+    <div id="productDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cardbg border border-cardborder rounded-3xl max-w-md w-full p-6 shadow-modal relative animate-fade-in overflow-hidden">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-elegant z-10 cursor-pointer">
+                <i class="fa-solid fa-xmark text-xs"></i>
             </button>
-            <p class="text-[10px] text-center text-gray-500">El pedido se enviará directamente al número de David (986 389 251).</p>
+            
+            <div class="relative w-full h-48 rounded-2xl overflow-hidden bg-lightbg mb-4 border border-cardborder shadow-elegant">
+                <img id="modalProductImg" src="" alt="Arroz" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/FAFAFA/71717A?text=Arroz+Tiendoo'">
+                <span id="modalProductCat" class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[10px] text-textdark font-semibold px-2.5 py-1 rounded-full border border-cardborder shadow-elegant"></span>
+            </div>
+
+            <h3 id="modalProductName" class="text-base font-black text-textdark mb-1"></h3>
+            <p id="modalProductPrice" class="text-sm font-extrabold text-textdark mb-3"></p>
+            
+            <div class="bg-lightbg p-3.5 rounded-2xl border border-cardborder mb-5 shadow-elegant">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted block mb-1">Descripción de Calidad</span>
+                <p id="modalProductDesc" class="text-xs text-textmuted leading-relaxed"></p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="addFromDetailModal()" class="w-full bg-textdark hover:bg-gray-800 text-white font-black py-3 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <span>Agregar al Carrito</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/51986389251?text=Hola%20David%20Garibay,%20deseo%20realizar%20una%20consulta%20sobre%20sus%20arroces." target="_blank" class="fixed bottom-6 right-6 z-40 bg-green-600 hover:bg-green-700 text-pureWhite w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl transition-all transform hover:scale-110 focus:outline-none" title="Contactar con David">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- Modal de Checkout / Formulario de Envío -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-cardbg border border-cardborder rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-6 shadow-modal relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-4 border-b border-cardborder pb-3">
+                <div>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted">Checkout Oficial 🇵🇪</span>
+                    <h3 class="text-base font-black text-textdark mt-0.5">Resumen y Datos de Envío</h3>
+                </div>
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-elegant cursor-pointer">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
 
-    <footer id="contacto" class="bg-midnight text-pureWhite border-t border-gray-800 pt-16 pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-xl bg-primaryRed flex items-center justify-center text-pureWhite font-black text-xl">
-                        DG
+            <!-- Resumen de items seleccionados -->
+            <div id="cartSummaryList" class="mb-4 space-y-2 max-h-40 overflow-y-auto pr-1 text-xs">
+                <!-- Inyectado por JS -->
+            </div>
+
+            <div class="border-t border-cardborder pt-3 mb-4 flex justify-between items-center text-xs font-black">
+                <span class="text-textmuted">Total a Pagar:</span>
+                <span id="modalTotalPrice" class="text-textdark text-sm">S/ 0.00</span>
+            </div>
+
+            <!-- Formulario de Envío -->
+            <form id="orderForm" onsubmit="sendToWhatsApp(event)" class="space-y-3.5 text-left">
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Nombre y Apellidos *</label>
+                    <input type="text" id="clientName" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark focus:border-textdark outline-none transition-colors shadow-elegant" placeholder="Ej. María Quispe Rojas">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Dirección de Entrega *</label>
+                    <input type="text" id="clientAddress" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark focus:border-textdark outline-none transition-colors shadow-elegant" placeholder="Ej. Jr. Huancavelica 450, Int. 2">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Número de Teléfono *</label>
+                    <div class="flex rounded-xl border border-cardborder overflow-hidden bg-lightbg focus-within:border-textdark transition-colors shadow-elegant">
+                        <div class="flex items-center gap-1 px-3 bg-gray-100 border-r border-cardborder text-xs font-semibold text-textdark">
+                            <span>🇵🇪</span>
+                            <span>+51</span>
+                        </div>
+                        <input type="tel" id="clientPhone" required pattern="[0-9]{9}" maxlength="9" class="w-full px-3 py-2.5 outline-none text-xs bg-transparent text-textdark" placeholder="987654321">
                     </div>
-                    <span class="text-lg font-black tracking-wider uppercase">David Garibay</span>
+                    <span class="text-[9px] text-textmuted mt-1 block">Celular peruano de 9 dígitos.</span>
                 </div>
-                <p class="text-gray-400 text-xs leading-relaxed">
-                    Productor y distribuidor de arroz de calidad superior. Lleve el mejor grano a su mesa o negocio al mejor precio.
-                </p>
-                <div class="flex space-x-3 pt-2">
-                    <a href="#" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-mustard hover:text-midnight transition-colors flex items-center justify-center text-pureWhite">
-                        <i class="fa-brands fa-facebook-f text-xs"></i>
-                    </a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-mustard hover:text-midnight transition-colors flex items-center justify-center text-pureWhite">
-                        <i class="fa-brands fa-instagram text-xs"></i>
-                    </a>
-                    <a href="https://wa.me/51986389251" target="_blank" class="w-9 h-9 rounded-full bg-green-600 hover:bg-green-700 transition-colors flex items-center justify-center text-pureWhite">
-                        <i class="fa-brands fa-whatsapp text-xs"></i>
-                    </a>
+
+                <!-- Selector de Provincias Interactivo Elegante -->
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Provincia de Destino *</label>
+                    <div class="relative">
+                        <button type="button" id="provinceSelectBtn" class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark text-left flex items-center justify-between shadow-elegant focus:border-textdark outline-none transition-colors cursor-pointer">
+                            <span id="selectedProvinceText" class="text-textmuted">Selecciona tu provincia en Perú</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-textmuted pointer-events-none"></i>
+                        </button>
+                        <input type="hidden" id="clientProvince" required>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-textdark hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span>Enviar Pedido a WhatsApp</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Elegante para Selector de Provincias (z-index superior corregido) -->
+    <div id="provinceModal" class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-cardbg border border-cardborder rounded-3xl max-w-md w-full p-5 shadow-modal relative animate-fade-in flex flex-col h-[80vh]">
+            <div class="flex items-center justify-between mb-3 pb-3 border-b border-cardborder">
+                <div>
+                    <span class="text-[9px] uppercase font-bold tracking-widest text-textmuted">Perú 🇵🇪</span>
+                    <h4 class="text-xs font-black uppercase tracking-wider text-textdark">Selecciona tu Provincia</h4>
+                </div>
+                <button type="button" id="closeProvinceModalBtn" class="w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center border border-cardborder shadow-elegant cursor-pointer hover:bg-gray-200 transition-colors">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            
+            <!-- Buscador interno de provincias -->
+            <div class="mb-3">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textmuted text-xs"></i>
+                    <input type="text" id="provinceSearchInput" placeholder="Escribe para buscar tu provincia..." class="w-full bg-lightbg border border-cardborder rounded-xl pl-9 pr-3 py-2.5 text-xs text-textdark outline-none focus:border-textdark shadow-elegant">
                 </div>
             </div>
 
-            <div class="space-y-4">
-                <h4 class="font-bold text-sm uppercase tracking-wider text-mustard">Números de Contacto</h4>
-                <div class="space-y-2 text-xs text-gray-300">
-                    <p class="flex items-center space-x-2">
-                        <i class="fa-solid fa-user text-primaryRed"></i>
-                        <span><strong>David:</strong> 986 389 251</span>
-                    </p>
-                    <p class="flex items-center space-x-2">
-                        <i class="fa-solid fa-industry text-mustard"></i>
-                        <span><strong>Molino:</strong> 926 198 337</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="space-y-4">
-                <h4 class="font-bold text-sm uppercase tracking-wider text-mustard">Enlaces Rápidos</h4>
-                <ul class="space-y-2 text-xs text-gray-400">
-                    <li><a href="#inicio" class="hover:text-pureWhite transition-colors">Inicio</a></li>
-                    <li><a href="#catalogo" class="hover:text-pureWhite transition-colors">Catálogo de Productos</a></li>
-                    <li><a href="#nosotros" class="hover:text-pureWhite transition-colors">Acerca de Nosotros</a></li>
-                </ul>
+            <!-- Contenedor con la lista completa de provincias agrupadas -->
+            <div id="provinceListContainer" class="overflow-y-auto space-y-1 pr-1 flex-1 text-xs">
+                <!-- Inyectado por JS -->
             </div>
         </div>
+    </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-gray-800/80 text-center text-xs text-gray-500">
-            <p>&copy; 2026 Arroz David Garibay 🌾🌾🌾. Todos los derechos reservados. Calidad y Confianza.</p>
-        </div>
+    <!-- Pie de Página -->
+    <footer class="max-w-xl mx-auto w-full px-4 py-6 text-center text-[10px] text-textmuted border-t border-cardborder mt-4">
+        <p>TIENDOO 🇵🇪 — Venta oficial de arroz peruano seleccionado.</p>
+        <p class="mt-1">Atención directa WhatsApp: +51 986 389251</p>
     </footer>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-6 left-6 bg-midnight text-pureWhite px-6 py-3 rounded-xl shadow-2xl border border-gray-700 transform -translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center space-x-3">
-        <i class="fa-solid fa-circle-check text-mustard text-lg"></i>
-        <span id="toast-message" class="text-xs font-semibold">Producto añadido al carrito</span>
-    </div>
-
     <script>
-        // Shopping Cart State
-        let cart = [];
+        // Catálogo de productos de arroz en Perú
+        const products = [
+            { id: 1, name: "P.D. Rojo", price: 165.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz extra seleccionado de grano uniforme, ideal para preparaciones diarias con excelente rendimiento y textura suelta." },
+            { id: 2, name: "P.D. Naranja", price: 155.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz de alta calidad con óptimo porcentaje de grano entero. Aporta consistencia y sabor inigualable a tus almuerzos." },
+            { id: 3, name: "P.D. Azul", price: 170.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Selección premium superior. Grano seleccionado sometido a rigurosos controles para asegurar el más alto estándar peruano." },
+            { id: 4, name: "P.D. Añejo", price: 190.00, category: "Cat 02", image: "img/arroz.jpg", desc: "Arroz añejado naturalmente para una cocción más firme y consistente. El preferido por chefs y expertos culinarios." },
+            { id: 5, name: "Caserita Amarilla", price: 140.00, category: "Cat 02", image: "img/arroz.jpg", desc: "Arroz tradicional de gran rendimiento económico y excelente sabor hogareño. Ideal para familias y negocios." },
+            { id: 6, name: "Caserita Amarilla F.", price: 150.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Arroz fortificado con nutrientes esenciales. Granos seleccionados que cuidan la alimentación de tu hogar." },
+            { id: 7, name: "Caserita Amarilla Laminado F.", price: 165.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Proceso especial de laminado que optimiza el tiempo de cocción sin perder consistencia ni valor nutricional." },
+            { id: 8, name: "Cholita Fucsia F.", price: 165.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Arroz de gran demanda por su excelente grano entero y calidad garantizada en cada presentación." }
+        ];
 
-        // DOM Elements
-        const cartBtn = document.getElementById('cart-btn');
-        const closeCartBtn = document.getElementById('close-cart-btn');
-        const cartSidebar = document.getElementById('cart-sidebar');
-        const cartSidebarOverlay = document.getElementById('cart-sidebar-overlay');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const cartBadge = document.getElementById('cart-badge');
-        const cartItemsContainer = document.getElementById('cart-items-container');
-        const emptyCartMessage = document.getElementById('empty-cart-message');
-        const cartTotal = document.getElementById('cart-total');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
+        // Listado completo de provincias del Perú organizadas por región
+        const peruvianProvinces = [
+            { region: "Amazonas", list: ["Chachapoyas", "Bagua", "Bongará", "Condorcanqui", "Luya", "Rodríguez de Mendoza", "Utcubamba"] },
+            { region: "Áncash", list: ["Huaraz", "Aija", "Antonio Raymondi", "Asunción", "Bolognesi", "Carhuaz", "Casma", "Corongo", "Huari", "Huarmey", "Huaylas", "Mariscal Luzuriaga", "Ocros", "Pallasca", "Pomabamba", "Recuay", "Santa (Chimbote)", "Sihuas", "Yungay"] },
+            { region: "Apurímac", list: ["Abancay", "Andahuaylas", "Antabamba", "Aymaraes", "Cotabambas", "Chincheros", "Grau"] },
+            { region: "Arequipa", list: ["Arequipa", "Camaná", "Caravelí", "Castilla", "Caylloma", "Condesuyos", "Islay", "La Unión"] },
+            { region: "Ayacucho", list: ["Huamanga", "Cangallo", "Huanca Sancos", "Huanta", "La Mar", "Lucanas", "Parinacochas", "Páucar del Sara Sara", "Sucre", "Víctor Fajardo", "Vilcas Huamán"] },
+            { region: "Cajamarca", list: ["Cajamarca", "Cajabamba", "Celendín", "Chota", "Contumazá", "Cutervo", "Hualgayoc", "Jaén", "San Ignacio", "San Marcos", "San Miguel", "San Pablo", "Santa Cruz"] },
+            { region: "Callao", list: ["Callao"] },
+            { region: "Cusco", list: ["Cusco", "Acomayo", "Anta", "Calca", "Canas", "Canchis", "Chumbivilcas", "Espinar", "La Convención", "Paruro", "Paucartambo", "Quispicanchi", "Urubamba"] },
+            { region: "Huancavelica", list: ["Huancavelica", "Acobamba", "Angaraes", "Castrovirreyna", "Churcampa", "Huaytará", "Tayacaja"] },
+            { region: "Huánuco", list: ["Huánuco", "Ambo", "Dos de Mayo", "Huacaybamba", "Huamalíes", "Leoncio Prado (Tingo María)", "Marañón", "Pachitea", "Puerto Inca", "Lauricocha", "Yarowilca"] },
+            { region: "Ica", list: ["Ica", "Chincha", "Nazca", "Palpa", "Pisco"] },
+            { region: "Junín", list: ["Huancayo", "Concepción", "Chanchamayo", "Jauja", "Junín", "Satipo", "Tarma", "Yauli", "Chupaca"] },
+            { region: "La Libertad", list: ["Trujillo", "Ascope", "Bolívar", "Chepén", "Gran Chimú", "Julcán", "Otuzco", "Pacasmayo", "Pataz", "Sánchez Carrión", "Santiago de Chuco", "Virú"] },
+            { region: "Lambayeque", list: ["Chiclayo", "Ferreñafe", "Lambayeque"] },
+            { region: "Lima", list: ["Lima Metropolitana", "Barranca", "Cajatambo", "Canta", "Cañete", "Huaral", "Huarochirí", "Huaura (Huacho)", "Oyón", "Yauyos"] },
+            { region: "Loreto", list: ["Maynas (Iquitos)", "Alto Amazonas", "Loreto", "Mariscal Ramón Castilla", "Requena", "Ucayali", "Datem del Marañón", "Putumayo"] },
+            { region: "Madre de Dios", list: ["Tambopata", "Manu", "Tahuamanu"] },
+            { region: "Moquegua", list: ["Mariscal Nieto", "General Sánchez Cerro", "Ilo"] },
+            { region: "Pasco", list: ["Pasco", "Daniel Alcides Carrión", "Oxapampa"] },
+            { region: "Piura", list: ["Piura", "Ayabaca", "Huancabamba", "Morropón", "Paita", "Sullana", "Talara", "Sechura"] },
+            { region: "Puno", list: ["Puno", "Azángaro", "Carabaya", "Chucuito", "El Collao", "Huancané", "Lampa", "Melgar", "Moho", "San Antonio de Putina", "San Román (Juliaca)", "Sandia", "Yunguyo"] },
+            { region: "San Martín", list: ["Moyobamba", "Bellavista", "El Dorado", "Huallaga", "Lamas", "Mariscal Cáceres", "Picota", "San Martín (Tarapoto)", "Tocache", "Rioja"] },
+            { region: "Tacna", list: ["Tacna", "Candarave", "Jorge Basadre", "Tarata"] },
+            { region: "Tumbes", list: ["Tumbes", "Contralmirante Villar", "Zarumilla"] },
+            { region: "Ucayali", list: ["Coronel Portillo (Pucallpa)", "Atalaya", "Padre Abad", "Purús"] }
+        ];
 
-        // Toggle Mobile Menu
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        let cart = {};
+        let currentFilter = 'todos';
+        let currentModalProductId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            updateSummary();
+            buildProvinceList();
+            setupProvinceListeners();
         });
 
-        // Open & Close Cart Sidebar
-        function openCart() {
-            cartSidebar.classList.remove('translate-x-full');
-            cartSidebarOverlay.classList.remove('hidden');
-            setTimeout(() => cartSidebarOverlay.classList.remove('opacity-0'), 10);
+        function setupProvinceListeners() {
+            const btn = document.getElementById('provinceSelectBtn');
+            const closeBtn = document.getElementById('closeProvinceModalBtn');
+            const searchInput = document.getElementById('provinceSearchInput');
+
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openProvinceDropdown();
+                });
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openProvinceDropdown();
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeProvinceDropdown();
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    buildProvinceList(e.target.value);
+                });
+            }
         }
 
-        function closeCart() {
-            cartSidebar.classList.add('translate-x-full');
-            cartSidebarOverlay.classList.add('opacity-0');
-            setTimeout(() => cartSidebarOverlay.classList.add('hidden'), 300);
-        }
-
-        cartBtn.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
-        cartSidebarOverlay.addEventListener('click', closeCart);
-
-        // Show Toast Notification
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.classList.remove('-translate-y-24', 'opacity-0');
+        function showCustomToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast bg-textdark text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-modal border border-cardborder flex items-center justify-between gap-3 w-full';
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white/70 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(toast);
             setTimeout(() => {
-                toast.classList.add('-translate-y-24', 'opacity-0');
-            }, 3000);
+                if (toast.parentElement) toast.remove();
+            }, 3500);
         }
 
-        // Add Product to Cart
-        function addToCart(name, price, image) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
+        function filterCategory(category) {
+            currentFilter = category;
+            const pills = document.querySelectorAll('.cat-pill');
+            pills.forEach(p => {
+                p.classList.remove('bg-textdark', 'text-white', 'shadow-elegant');
+                p.classList.add('bg-cardbg', 'text-textmuted', 'border', 'border-cardborder', 'shadow-elegant');
+            });
+            event.currentTarget.classList.remove('bg-cardbg', 'text-textmuted', 'border', 'border-cardborder');
+            event.currentTarget.classList.add('bg-textdark', 'text-white', 'shadow-elegant');
+
+            if (category === 'todos') {
+                renderProducts(products);
             } else {
-                cart.push({ name, price, image, quantity: 1 });
+                renderProducts(products.filter(p => p.category === category));
             }
-            updateCartUI();
-            showToast(`¡${name} añadido al carrito!`);
         }
 
-        // Update Quantity
-        function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            updateCartUI();
-        }
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
 
-        // Remove Item
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        // Update Cart UI
-        function updateCartUI() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartBadge.textContent = totalItems;
-            
-            cartBadge.classList.add('scale-125');
-            setTimeout(() => cartBadge.classList.remove('scale-125'), 200);
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div id="empty-cart-message" class="text-center py-20 text-gray-400 space-y-3">
-                        <i class="fa-solid fa-basket-shopping text-4xl text-gray-300"></i>
-                        <p class="text-sm">Tu carrito está vacío.</p>
-                    </div>
-                `;
-                cartTotal.textContent = 'S/. 0.00';
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 text-center py-10 text-textmuted text-xs">No hay productos en esta categoría.</div>`;
                 return;
             }
 
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
+            items.forEach(product => {
+                const qty = cart[product.id] || 0;
+                const isSelected = qty > 0;
 
-            cart.forEach((item, index) => {
-                total += item.price * item.quantity;
-                const itemEl = document.createElement('div');
-                itemEl.className = 'flex items-center space-x-4 py-4';
-                itemEl.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain bg-gray-50 rounded-xl p-2 border border-gray-100">
-                    <div class="flex-grow space-y-1">
-                        <h4 class="text-xs font-bold text-midnight line-clamp-1">${item.name}</h4>
-                        <div class="text-xs text-primaryRed font-black">S/. ${item.price.toFixed(2)}</div>
-                        <div class="flex items-center space-x-2 pt-1">
-                            <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-midnight flex items-center justify-center font-bold text-xs">-</button>
-                            <span class="text-xs font-bold text-midnight">${item.quantity}</span>
-                            <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-midnight flex items-center justify-center font-bold text-xs">+</button>
+                const card = document.createElement('div');
+                card.className = `bg-cardbg border ${isSelected ? 'border-textdark shadow-hover ring-1 ring-textdark/10' : 'border-cardborder shadow-elegant'} rounded-2xl p-3 flex flex-col justify-between transition-all duration-200 relative group cursor-pointer`;
+                
+                card.onclick = (e) => {
+                    if (e.target.closest('button')) return;
+                    openProductModal(product.id);
+                };
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative w-full h-32 sm:h-36 rounded-xl overflow-hidden bg-lightbg mb-2.5 border border-cardborder shadow-elegant">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/FAFAFA/71717A?text=Arroz+Tiendoo'">
+                            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur-md text-[9px] text-textdark font-semibold px-2 py-0.5 rounded-full border border-cardborder shadow-elegant">
+                                ${product.category.replace('Cat ', 'Cat. ')}
+                            </span>
                         </div>
+                        <h3 class="font-bold text-xs text-textdark leading-snug mb-0.5 line-clamp-1">${product.name}</h3>
                     </div>
-                    <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-primaryRed p-2 text-xs transition-colors">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                `;
-                cartItemsContainer.appendChild(itemEl);
-            });
 
-            cartTotal.textContent = `S/. ${total.toFixed(2)}`;
+                    <div class="mt-2.5 pt-2 border-t border-cardborder flex items-center justify-between">
+                        <span class="text-textdark font-extrabold text-xs sm:text-sm">S/ ${product.price.toFixed(2)}</span>
+                        
+                        ${!isSelected ? `
+                            <button onclick="changeQuantity(${product.id}, 1)" class="w-7 h-7 rounded-full bg-textdark text-white hover:bg-gray-800 flex items-center justify-center transition-all shadow-elegant cursor-pointer" aria-label="Añadir producto">
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                            </button>
+                        ` : `
+                            <div class="flex items-center gap-1 bg-lightbg border border-cardborder rounded-full p-0.5 shadow-elegant">
+                                <button onclick="changeQuantity(${product.id}, -1)" class="w-6 h-6 rounded-full ${qty === 1 ? 'bg-red-600 hover:bg-red-700' : 'bg-textdark hover:bg-gray-800'} text-white flex items-center justify-center transition-all cursor-pointer" aria-label="Restar o Eliminar">
+                                    <i class="fa-solid ${qty === 1 ? 'fa-trash-can' : 'fa-minus'} text-[9px]"></i>
+                                </button>
+                                <span class="w-5 text-center font-black text-xs text-textdark">${qty}</span>
+                                <button onclick="changeQuantity(${product.id}, 1)" class="w-6 h-6 rounded-full bg-textdark text-white hover:bg-gray-800 flex items-center justify-center transition-all cursor-pointer" aria-label="Sumar">
+                                    <i class="fa-solid fa-plus text-[9px]"></i>
+                                </button>
+                            </div>
+                        `}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        // Send Order via WhatsApp
-        function sendWhatsAppOrder() {
-            if (cart.length === 0) {
-                showToast('Tu carrito está vacío para enviar un pedido.');
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentModalProductId = productId;
+            document.getElementById('modalProductImg').src = product.image;
+            document.getElementById('modalProductCat').textContent = product.category.replace('Cat ', 'Categoría ');
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductPrice').textContent = `S/ ${product.price.toFixed(2)}`;
+            document.getElementById('modalProductDesc').textContent = product.desc;
+
+            const modal = document.getElementById('productDetailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('productDetailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.classList.remove('modal-open');
+            currentModalProductId = null;
+        }
+
+        function addFromDetailModal() {
+            if (currentModalProductId !== null) {
+                changeQuantity(currentModalProductId, 1);
+                closeProductModal();
+            }
+        }
+
+        function changeQuantity(productId, delta) {
+            if (!cart[productId]) {
+                cart[productId] = 0;
+            }
+            cart[productId] += delta;
+            
+            if (cart[productId] <= 0) {
+                delete cart[productId];
+            }
+
+            renderProducts(currentFilter === 'todos' ? products : products.filter(p => p.category === currentFilter));
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            for (const [id, qty] of Object.entries(cart)) {
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    totalItems += qty;
+                    totalPrice += product.price * qty;
+                }
+            }
+
+            document.getElementById('calcTotalItems').textContent = totalItems;
+            document.getElementById('calcTotalPrice').textContent = `S/ ${totalPrice.toFixed(2)}`;
+            document.getElementById('headerSelectedCount').textContent = totalItems;
+        }
+
+        function openCartModal() {
+            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+            if (totalItems === 0) {
+                showCustomToast('Selecciona al menos un producto pulsando en las tarjetas.');
                 return;
             }
 
-            let message = "Hola David Garibay 🌾, deseo realizar el siguiente pedido:\n\n";
-            let total = 0;
+            const container = document.getElementById('cartSummaryList');
+            container.innerHTML = '';
+            let totalPrice = 0;
 
-            cart.forEach(item => {
-                let sub = item.price * item.quantity;
-                total += sub;
-                message += `• ${item.quantity}x ${item.name} - S/. ${sub.toFixed(2)}\n`;
+            for (const [id, qty] of Object.entries(cart)) {
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    const subtotal = product.price * qty;
+                    totalPrice += subtotal;
+
+                    container.innerHTML += `
+                        <div class="flex justify-between items-center bg-lightbg p-2.5 rounded-xl border border-cardborder shadow-elegant">
+                            <div>
+                                <h4 class="font-bold text-textdark text-xs">${product.name}</h4>
+                                <p class="text-[10px] text-textmuted">Cantidad: ${qty} | S/ ${product.price.toFixed(2)} c/u</p>
+                            </div>
+                            <span class="font-black text-textdark text-xs">S/ ${subtotal.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById('modalTotalPrice').textContent = `S/ ${totalPrice.toFixed(2)}`;
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Construir listado de provincias
+        function buildProvinceList(filterText = '') {
+            const container = document.getElementById('provinceListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            peruvianProvinces.forEach(group => {
+                const filteredList = group.list.filter(prov => prov.toLowerCase().includes(filterText.toLowerCase()));
+                if (filteredList.length > 0) {
+                    const regionTitle = document.createElement('div');
+                    regionTitle.className = 'text-[10px] font-black uppercase tracking-wider text-textmuted px-3 py-1.5 bg-lightbg mt-2 rounded-lg border border-cardborder';
+                    regionTitle.textContent = group.region;
+                    container.appendChild(regionTitle);
+
+                    filteredList.forEach(prov => {
+                        const item = document.createElement('button');
+                        item.type = 'button';
+                        item.className = 'w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold text-textdark hover:bg-gray-100 transition-colors flex items-center justify-between group cursor-pointer';
+                        item.innerHTML = `<span>${prov}</span> <i class="fa-solid fa-check opacity-0 group-hover:opacity-100 text-textdark text-[10px]"></i>`;
+                        item.onclick = (e) => {
+                            e.preventDefault();
+                            selectProvince(prov);
+                        };
+                        container.appendChild(item);
+                    });
+                }
             });
+        }
 
-            message += `\n*Total a Pagar: S/. ${total.toFixed(2)}*\n\nPor favor, confirmarme el envío. ¡Gracias!`;
+        function openProvinceDropdown() {
+            const modal = document.getElementById('provinceModal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            const searchInput = document.getElementById('provinceSearchInput');
+            if (searchInput) searchInput.value = '';
+            buildProvinceList();
+            setTimeout(() => {
+                if (searchInput) searchInput.focus();
+            }, 100);
+        }
+
+        function closeProvinceDropdown() {
+            const modal = document.getElementById('provinceModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function selectProvince(provinceName) {
+            document.getElementById('clientProvince').value = provinceName;
+            const textSpan = document.getElementById('selectedProvinceText');
+            if (textSpan) {
+                textSpan.textContent = provinceName;
+                textSpan.classList.remove('text-textmuted');
+                textSpan.classList.add('text-textdark', 'font-bold');
+            }
+            closeProvinceDropdown();
+        }
+
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('clientName').value.trim();
+            const address = document.getElementById('clientAddress').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const province = document.getElementById('clientProvince').value;
+
+            if (!/^[0-9]{9}$/.test(phone)) {
+                showCustomToast('Por favor, ingresa un número celular peruano válido de 9 dígitos.');
+                return;
+            }
+
+            if (!province) {
+                showCustomToast('Por favor, selecciona tu provincia de destino.');
+                return;
+            }
+
+            let orderSummary = '';
+            let totalPrice = 0;
+
+            for (const [id, qty] of Object.entries(cart)) {
+                const product = products.find(p => p.id == id);
+                if (product) {
+                    const sub = product.price * qty;
+                    totalPrice += sub;
+                    orderSummary += `• ${qty}x ${product.name} - S/ ${sub.toFixed(2)}\n`;
+                }
+            }
+
+            const message = `*¡NUEVO PEDIDO - TIENDOO 🇵🇪*\n\n` +
+                            `*👤 Cliente:* ${name}\n` +
+                            `*📍 Dirección:* ${address}\n` +
+                            `*🏙️ Provincia:* ${province}\n` +
+                            `*📱 Teléfono:* +51 ${phone}\n\n` +
+                            `*🛒 DETALLE DEL PEDIDO:*\n` +
+                            orderSummary + `\n` +
+                            `*💰 TOTAL A PAGAR: S/ ${totalPrice.toFixed(2)}*\n\n` +
+                            `_Enviado desde Tiendoo Web App_`;
 
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/51986389251?text=${encodedMessage}`;
-            
+            const whatsappNumber = '51986389251';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
             window.open(whatsappUrl, '_blank');
+
+            cart = {};
+            renderProducts(products);
+            updateSummary();
+            closeCartModal();
+            document.getElementById('orderForm').reset();
+            const textSpan = document.getElementById('selectedProvinceText');
+            if (textSpan) {
+                textSpan.textContent = 'Selecciona tu provincia en Perú';
+                textSpan.classList.add('text-textmuted');
+                textSpan.classList.remove('text-textdark', 'font-bold');
+            }
         }
     </script>
 </body>
 </html>
-```
