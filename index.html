@@ -6,8 +6,8 @@
     <title>TIENDOO - Arroz Peruano</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -15,19 +15,20 @@
             theme: {
                 extend: {
                     colors: {
-                        lightbg: '#F8FAFC',
-                        cardbg: '#FFFFFF',
-                        cardborder: '#E2E8F0',
-                        textdark: '#09090B',
-                        textmuted: '#71717A',
+                        swiftRed: '#D30000',
+                        bridgeCharcoal: '#383838',
+                        routeBlack: '#000000',
+                        clearWhite: '#FFFFFF',
+                        lightbg: '#F9FAFB',
+                        cardborder: '#E5E7EB',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Montserrat', 'sans-serif'],
                     },
                     boxShadow: {
-                        'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
-                        'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 10px 15px -5px rgba(0, 0, 0, 0.04)',
-                        'modal': '0 25px 50px -12px rgba(0, 0, 0, 0.18)'
+                        'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08)',
+                        'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.18), 0 10px 15px -5px rgba(0, 0, 0, 0.1)',
+                        'modal': '0 25px 60px -15px rgba(0, 0, 0, 0.35)'
                     }
                 }
             }
@@ -35,9 +36,9 @@
     </script>
     <style>
         body {
-            background-color: #F8FAFC;
-            color: #09090B;
-            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+            color: #000000;
+            font-family: 'Montserrat', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
         .no-scrollbar::-webkit-scrollbar {
@@ -64,105 +65,98 @@
         }
     </style>
 </head>
-<body class="bg-lightbg text-textdark min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
+<body class="bg-lightbg text-routeBlack min-h-screen flex flex-col justify-between selection:bg-[#D30000] selection:text-white">
 
-    <!-- Sistema de Notificaciones Internas -->
-    <div id="toastContainer" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2 w-11/12 max-w-sm"></div>
+    <div id="toastContainer" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center"></div>
 
-    <!-- Cabecera Minimalista -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-cardborder px-4 py-3.5 shadow-elegant">
+    <header class="sticky top-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-md border-b border-cardborder px-4 py-3.5 shadow-modal">
         <div class="flex items-center justify-between max-w-xl mx-auto">
             <div>
-                <h1 class="text-base font-black tracking-wider text-textdark">TIENDOO<span class="text-textmuted">.</span></h1>
+                <h1 class="text-base font-black tracking-wider text-routeBlack">TIENDOO<span class="text-[#D30000]">.</span></h1>
             </div>
-            <!-- Botón de bolsa de compras superior -->
-            <button onclick="openCartModal()" id="headerCartBtn" class="relative bg-cardbg hover:bg-gray-50 text-textdark px-3.5 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 border border-cardborder shadow-elegant cursor-pointer">
-                <i class="fa-solid fa-bag-shopping text-textdark text-xs"></i>
-                <span id="headerSelectedCount" class="font-black">0</span>
+            <!-- Botón de bolsa de compras superior con sombra oscura -->
+            <button onclick="openCartModal()" id="headerCartBtn" class="relative bg-clearWhite hover:bg-gray-50 text-routeBlack px-3.5 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 border border-cardborder shadow-modal cursor-pointer">
+                <i class="fa-solid fa-bag-shopping text-swiftRed text-xs"></i>
+                <span id="headerSelectedCount" class="font-black text-routeBlack">0</span>
             </button>
         </div>
     </header>
 
-    <!-- Resumen Superior Monocromático -->
     <section class="max-w-xl mx-auto w-full px-4 pt-4 pb-1">
-        <div class="bg-cardbg border border-cardborder rounded-2xl p-4 shadow-elegant flex items-center justify-between">
+        <div class="bg-clearWhite border border-cardborder rounded-2xl p-4 shadow-modal flex items-center justify-between">
             <div>
-                <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted block">Resumen del Pedido 🇵🇪</span>
+                <span class="text-[10px] uppercase font-bold tracking-widest text-bridgeCharcoal block">Resumen del Pedido 🇵🇪</span>
                 <div class="flex items-baseline gap-2 mt-0.5">
-                    <span id="calcTotalItems" class="text-xl font-black text-textdark">0</span>
-                    <span class="text-xs font-semibold text-textmuted">productos añadidos</span>
+                    <span id="calcTotalItems" class="text-xl font-black text-routeBlack">0</span>
+                    <span class="text-xs font-semibold text-bridgeCharcoal">productos añadidos</span>
                 </div>
             </div>
             <div class="text-right bg-lightbg px-4 py-2.5 rounded-xl border border-cardborder shadow-elegant">
-                <span class="text-[9px] uppercase font-bold text-textmuted block">Total Estimado</span>
-                <span id="calcTotalPrice" class="text-base font-black text-textdark">S/ 0.00</span>
+                <span class="text-[9px] uppercase font-bold text-bridgeCharcoal block">Total Estimado</span>
+                <span id="calcTotalPrice" class="text-base font-black text-swiftRed">S/ 0.00</span>
             </div>
         </div>
     </section>
 
-    <!-- Categorías Numeradas (Scroll Horizontal) -->
     <section class="max-w-xl mx-auto w-full px-4 py-3">
         <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-            <button onclick="filterCategory('todos')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-textdark text-white shadow-elegant flex-shrink-0 cursor-pointer">
-                Todas (08)
-            </button>
-            <button onclick="filterCategory('Cat 01')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+            <button onclick="filterCategory('Cat 01')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-swiftRed text-white shadow-modal flex-shrink-0 cursor-pointer">
                 Categoría 01 (3)
             </button>
-            <button onclick="filterCategory('Cat 02')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+            <button onclick="filterCategory('Cat 02')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-clearWhite text-bridgeCharcoal border border-cardborder hover:border-swiftRed shadow-modal flex-shrink-0 cursor-pointer">
                 Categoría 02 (2)
             </button>
-            <button onclick="filterCategory('Cat 03')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-cardbg text-textmuted border border-cardborder hover:border-textdark shadow-elegant flex-shrink-0 cursor-pointer">
+            <button onclick="filterCategory('Cat 03')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-clearWhite text-bridgeCharcoal border border-cardborder hover:border-swiftRed shadow-modal flex-shrink-0 cursor-pointer">
                 Categoría 03 (3)
             </button>
         </div>
     </section>
 
-    <!-- Cuadrícula de Productos (2 Columnas) -->
     <main class="max-w-xl mx-auto w-full px-4 py-1.5 flex-1 mb-6">
         <div id="productGrid" class="grid grid-cols-2 gap-3.5">
             <!-- Inyectado por JavaScript -->
         </div>
     </main>
 
-    <!-- Modal de Detalle de Producto -->
     <div id="productDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-cardbg border border-cardborder rounded-3xl max-w-md w-full p-6 shadow-modal relative animate-fade-in overflow-hidden">
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-elegant z-10 cursor-pointer">
+        <div class="bg-clearWhite border border-cardborder rounded-3xl max-w-md w-full p-6 shadow-modal relative animate-fade-in overflow-hidden">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-lightbg text-routeBlack flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-modal z-10 cursor-pointer">
                 <i class="fa-solid fa-xmark text-xs"></i>
             </button>
             
             <div class="relative w-full h-48 rounded-2xl overflow-hidden bg-lightbg mb-4 border border-cardborder shadow-elegant">
-                <img id="modalProductImg" src="" alt="Arroz" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/FAFAFA/71717A?text=Arroz+Tiendoo'">
-                <span id="modalProductCat" class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-[10px] text-textdark font-semibold px-2.5 py-1 rounded-full border border-cardborder shadow-elegant"></span>
+                <img id="modalProductImg" src="" alt="Arroz" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/FAFAFA/383838?text=Arroz+Tiendoo'">
+                <span id="modalProductCat" class="absolute top-3 left-3 bg-clearWhite/90 backdrop-blur-md text-[10px] text-routeBlack font-semibold px-2.5 py-1 rounded-full border border-cardborder shadow-elegant"></span>
             </div>
 
-            <h3 id="modalProductName" class="text-base font-black text-textdark mb-1"></h3>
-            <p id="modalProductPrice" class="text-sm font-extrabold text-textdark mb-3"></p>
+            <h3 id="modalProductName" class="text-base font-black text-routeBlack mb-1"></h3>
+            <p id="modalProductPrice" class="text-sm font-extrabold text-swiftRed mb-4"></p>
             
-            <div class="bg-lightbg p-3.5 rounded-2xl border border-cardborder mb-5 shadow-elegant">
-                <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted block mb-1">Descripción de Calidad</span>
-                <p id="modalProductDesc" class="text-xs text-textmuted leading-relaxed"></p>
+            <!-- Descripción limpia con título fuera -->
+            <div class="mb-5">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-bridgeCharcoal block mb-1.5">Descripción</span>
+                <div class="bg-lightbg p-3.5 rounded-2xl border border-cardborder shadow-elegant">
+                    <p id="modalProductDesc" class="text-xs text-bridgeCharcoal leading-relaxed"></p>
+                </div>
             </div>
 
             <div class="flex items-center gap-3">
-                <button onclick="addFromDetailModal()" class="w-full bg-textdark hover:bg-gray-800 text-white font-black py-3 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
-                    <i class="fa-solid fa-cart-plus"></i>
+                <button onclick="addFromDetailModal()" class="w-full bg-routeBlack hover:bg-bridgeCharcoal text-clearWhite font-black py-3 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+                    <i class="fa-solid fa-cart-plus text-swiftRed"></i>
                     <span>Agregar al Carrito</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Checkout / Formulario de Envío -->
     <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-cardbg border border-cardborder rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-6 shadow-modal relative animate-fade-in max-h-[90vh] overflow-y-auto">
+        <div class="bg-clearWhite border border-cardborder rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-6 shadow-modal relative animate-fade-in max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-4 border-b border-cardborder pb-3">
                 <div>
-                    <span class="text-[10px] uppercase font-bold tracking-widest text-textmuted">Checkout Oficial 🇵🇪</span>
-                    <h3 class="text-base font-black text-textdark mt-0.5">Resumen y Datos de Envío</h3>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-swiftRed">Checkout Oficial 🇵🇪</span>
+                    <h3 class="text-base font-black text-routeBlack mt-0.5">Resumen y Datos de Envío</h3>
                 </div>
-                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-elegant cursor-pointer">
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-lightbg text-routeBlack flex items-center justify-center hover:bg-gray-200 transition-colors border border-cardborder shadow-modal cursor-pointer">
                     <i class="fa-solid fa-xmark text-xs"></i>
                 </button>
             </div>
@@ -173,48 +167,48 @@
             </div>
 
             <div class="border-t border-cardborder pt-3 mb-4 flex justify-between items-center text-xs font-black">
-                <span class="text-textmuted">Total a Pagar:</span>
-                <span id="modalTotalPrice" class="text-textdark text-sm">S/ 0.00</span>
+                <span class="text-bridgeCharcoal">Total a Pagar:</span>
+                <span id="modalTotalPrice" class="text-swiftRed text-sm">S/ 0.00</span>
             </div>
 
             <!-- Formulario de Envío -->
             <form id="orderForm" onsubmit="sendToWhatsApp(event)" class="space-y-3.5 text-left">
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Nombre y Apellidos *</label>
-                    <input type="text" id="clientName" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark focus:border-textdark outline-none transition-colors shadow-elegant" placeholder="Ej. María Quispe Rojas">
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-bridgeCharcoal mb-1">Nombre y Apellidos *</label>
+                    <input type="text" id="clientName" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-routeBlack focus:border-swiftRed outline-none transition-colors shadow-elegant" placeholder="Ej. María Quispe Rojas">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Dirección de Entrega *</label>
-                    <input type="text" id="clientAddress" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark focus:border-textdark outline-none transition-colors shadow-elegant" placeholder="Ej. Jr. Huancavelica 450, Int. 2">
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-bridgeCharcoal mb-1">Dirección de Entrega *</label>
+                    <input type="text" id="clientAddress" required class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-routeBlack focus:border-swiftRed outline-none transition-colors shadow-elegant" placeholder="Ej. Jr. Huancavelica 450, Int. 2">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Número de Teléfono *</label>
-                    <div class="flex rounded-xl border border-cardborder overflow-hidden bg-lightbg focus-within:border-textdark transition-colors shadow-elegant">
-                        <div class="flex items-center gap-1 px-3 bg-gray-100 border-r border-cardborder text-xs font-semibold text-textdark">
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-bridgeCharcoal mb-1">Número de Teléfono *</label>
+                    <div class="flex rounded-xl border border-cardborder overflow-hidden bg-lightbg focus-within:border-swiftRed transition-colors shadow-elegant">
+                        <div class="flex items-center gap-1 px-3 bg-gray-100 border-r border-cardborder text-xs font-semibold text-routeBlack">
                             <span>🇵🇪</span>
                             <span>+51</span>
                         </div>
-                        <input type="tel" id="clientPhone" required pattern="[0-9]{9}" maxlength="9" class="w-full px-3 py-2.5 outline-none text-xs bg-transparent text-textdark" placeholder="987654321">
+                        <input type="tel" id="clientPhone" required pattern="[0-9]{9}" maxlength="9" class="w-full px-3 py-2.5 outline-none text-xs bg-transparent text-routeBlack" placeholder="987654321">
                     </div>
-                    <span class="text-[9px] text-textmuted mt-1 block">Celular peruano de 9 dígitos.</span>
+                    <span class="text-[9px] text-bridgeCharcoal mt-1 block">Celular peruano de 9 dígitos.</span>
                 </div>
 
                 <!-- Selector de Provincias Interactivo Elegante -->
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-textmuted mb-1">Provincia de Destino *</label>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-bridgeCharcoal mb-1">Provincia de Destino *</label>
                     <div class="relative">
-                        <button type="button" id="provinceSelectBtn" class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-textdark text-left flex items-center justify-between shadow-elegant focus:border-textdark outline-none transition-colors cursor-pointer">
-                            <span id="selectedProvinceText" class="text-textmuted">Selecciona tu provincia en Perú</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-textmuted pointer-events-none"></i>
+                        <button type="button" id="provinceSelectBtn" class="w-full bg-lightbg border border-cardborder rounded-xl px-3.5 py-2.5 text-xs text-routeBlack text-left flex items-center justify-between shadow-elegant focus:border-swiftRed outline-none transition-colors cursor-pointer">
+                            <span id="selectedProvinceText" class="text-bridgeCharcoal">Selecciona tu provincia en Perú</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-bridgeCharcoal pointer-events-none"></i>
                         </button>
                         <input type="hidden" id="clientProvince" required>
                     </div>
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="w-full bg-textdark hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+                    <button type="submit" class="w-full bg-swiftRed hover:bg-[#b50000] text-clearWhite font-bold py-3.5 rounded-xl transition-all shadow-modal flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-base"></i>
                         <span>Enviar Pedido a WhatsApp</span>
                     </button>
@@ -223,15 +217,14 @@
         </div>
     </div>
 
-    <!-- Modal Elegante para Selector de Provincias (z-index superior corregido) -->
     <div id="provinceModal" class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-cardbg border border-cardborder rounded-3xl max-w-md w-full p-5 shadow-modal relative animate-fade-in flex flex-col h-[80vh]">
+        <div class="bg-clearWhite border border-cardborder rounded-3xl max-w-md w-full p-5 shadow-modal relative animate-fade-in flex flex-col h-[80vh]">
             <div class="flex items-center justify-between mb-3 pb-3 border-b border-cardborder">
                 <div>
-                    <span class="text-[9px] uppercase font-bold tracking-widest text-textmuted">Perú 🇵🇪</span>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-textdark">Selecciona tu Provincia</h4>
+                    <span class="text-[9px] uppercase font-bold tracking-widest text-swiftRed">Perú 🇵🇪</span>
+                    <h4 class="text-xs font-black uppercase tracking-wider text-routeBlack">Selecciona tu Provincia</h4>
                 </div>
-                <button type="button" id="closeProvinceModalBtn" class="w-8 h-8 rounded-full bg-lightbg text-textdark flex items-center justify-center border border-cardborder shadow-elegant cursor-pointer hover:bg-gray-200 transition-colors">
+                <button type="button" id="closeProvinceModalBtn" class="w-8 h-8 rounded-full bg-lightbg text-routeBlack flex items-center justify-center border border-cardborder shadow-modal cursor-pointer hover:bg-gray-200 transition-colors">
                     <i class="fa-solid fa-xmark text-xs"></i>
                 </button>
             </div>
@@ -239,8 +232,8 @@
             <!-- Buscador interno de provincias -->
             <div class="mb-3">
                 <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-textmuted text-xs"></i>
-                    <input type="text" id="provinceSearchInput" placeholder="Escribe para buscar tu provincia..." class="w-full bg-lightbg border border-cardborder rounded-xl pl-9 pr-3 py-2.5 text-xs text-textdark outline-none focus:border-textdark shadow-elegant">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-bridgeCharcoal text-xs"></i>
+                    <input type="text" id="provinceSearchInput" placeholder="Escribe para buscar tu provincia..." class="w-full bg-lightbg border border-cardborder rounded-xl pl-9 pr-3 py-2.5 text-xs text-routeBlack outline-none focus:border-swiftRed shadow-elegant">
                 </div>
             </div>
 
@@ -251,14 +244,13 @@
         </div>
     </div>
 
-    <!-- Pie de Página -->
-    <footer class="max-w-xl mx-auto w-full px-4 py-6 text-center text-[10px] text-textmuted border-t border-cardborder mt-4">
+    <footer class="max-w-xl mx-auto w-full px-4 py-6 text-center text-[10px] text-bridgeCharcoal border-t border-cardborder mt-4">
         <p>TIENDOO 🇵🇪 — Venta oficial de arroz peruano seleccionado.</p>
         <p class="mt-1">Atención directa WhatsApp: +51 986 389251</p>
     </footer>
 
     <script>
-        // Catálogo de productos de arroz en Perú
+        // Catálogo de productos de arroz en Perú (por defecto Cat 01)
         const products = [
             { id: 1, name: "P.D. Rojo", price: 165.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz extra seleccionado de grano uniforme, ideal para preparaciones diarias con excelente rendimiento y textura suelta." },
             { id: 2, name: "P.D. Naranja", price: 155.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz de alta calidad con óptimo porcentaje de grano entero. Aporta consistencia y sabor inigualable a tus almuerzos." },
@@ -300,11 +292,11 @@
         ];
 
         let cart = {};
-        let currentFilter = 'todos';
+        let currentFilter = 'Cat 01';
         let currentModalProductId = null;
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderProducts(products);
+            renderProducts(products.filter(p => p.category === currentFilter));
             updateSummary();
             buildProvinceList();
             setupProvinceListeners();
@@ -342,35 +334,34 @@
             }
         }
 
+        // Sistema de Notificaciones de Instancia Única y Ancho Ajustado
         function showCustomToast(message) {
             const container = document.getElementById('toastContainer');
+            container.innerHTML = '';
+            
             const toast = document.createElement('div');
-            toast.className = 'custom-toast bg-textdark text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-modal border border-cardborder flex items-center justify-between gap-3 w-full';
+            toast.className = 'custom-toast bg-routeBlack text-clearWhite text-xs font-bold px-4 py-3 rounded-2xl shadow-modal border border-cardborder flex items-center gap-3 w-auto max-w-xs';
             toast.innerHTML = `
-                <span>${message}</span>
-                <button onclick="this.parentElement.remove()" class="text-white/70 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <span class="whitespace-nowrap">${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-clearWhite/70 hover:text-clearWhite ml-1"><i class="fa-solid fa-xmark"></i></button>
             `;
             container.appendChild(toast);
             setTimeout(() => {
                 if (toast.parentElement) toast.remove();
-            }, 3500);
+            }, 3000);
         }
 
         function filterCategory(category) {
             currentFilter = category;
             const pills = document.querySelectorAll('.cat-pill');
             pills.forEach(p => {
-                p.classList.remove('bg-textdark', 'text-white', 'shadow-elegant');
-                p.classList.add('bg-cardbg', 'text-textmuted', 'border', 'border-cardborder', 'shadow-elegant');
+                p.classList.remove('bg-swiftRed', 'text-white', 'shadow-modal');
+                p.classList.add('bg-clearWhite', 'text-bridgeCharcoal', 'border', 'border-cardborder', 'shadow-modal');
             });
-            event.currentTarget.classList.remove('bg-cardbg', 'text-textmuted', 'border', 'border-cardborder');
-            event.currentTarget.classList.add('bg-textdark', 'text-white', 'shadow-elegant');
+            event.currentTarget.classList.remove('bg-clearWhite', 'text-bridgeCharcoal', 'border', 'border-cardborder');
+            event.currentTarget.classList.add('bg-swiftRed', 'text-white', 'shadow-modal');
 
-            if (category === 'todos') {
-                renderProducts(products);
-            } else {
-                renderProducts(products.filter(p => p.category === category));
-            }
+            renderProducts(products.filter(p => p.category === category));
         }
 
         function renderProducts(items) {
@@ -378,7 +369,7 @@
             grid.innerHTML = '';
 
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-2 text-center py-10 text-textmuted text-xs">No hay productos en esta categoría.</div>`;
+                grid.innerHTML = `<div class="col-span-2 text-center py-10 text-bridgeCharcoal text-xs">No hay productos en esta categoría.</div>`;
                 return;
             }
 
@@ -387,7 +378,7 @@
                 const isSelected = qty > 0;
 
                 const card = document.createElement('div');
-                card.className = `bg-cardbg border ${isSelected ? 'border-textdark shadow-hover ring-1 ring-textdark/10' : 'border-cardborder shadow-elegant'} rounded-2xl p-3 flex flex-col justify-between transition-all duration-200 relative group cursor-pointer`;
+                card.className = `bg-clearWhite border border-cardborder shadow-modal hover:shadow-hover rounded-2xl p-3 flex flex-col justify-between transition-all duration-200 relative group cursor-pointer`;
                 
                 card.onclick = (e) => {
                     if (e.target.closest('button')) return;
@@ -397,28 +388,28 @@
                 card.innerHTML = `
                     <div>
                         <div class="relative w-full h-32 sm:h-36 rounded-xl overflow-hidden bg-lightbg mb-2.5 border border-cardborder shadow-elegant">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/FAFAFA/71717A?text=Arroz+Tiendoo'">
-                            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur-md text-[9px] text-textdark font-semibold px-2 py-0.5 rounded-full border border-cardborder shadow-elegant">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/FAFAFA/383838?text=Arroz+Tiendoo'">
+                            <span class="absolute top-2 left-2 bg-clearWhite/90 backdrop-blur-md text-[9px] text-routeBlack font-semibold px-2 py-0.5 rounded-full border border-cardborder shadow-elegant">
                                 ${product.category.replace('Cat ', 'Cat. ')}
                             </span>
                         </div>
-                        <h3 class="font-bold text-xs text-textdark leading-snug mb-0.5 line-clamp-1">${product.name}</h3>
+                        <h3 class="font-bold text-xs text-routeBlack leading-snug mb-0.5 line-clamp-1">${product.name}</h3>
                     </div>
 
                     <div class="mt-2.5 pt-2 border-t border-cardborder flex items-center justify-between">
-                        <span class="text-textdark font-extrabold text-xs sm:text-sm">S/ ${product.price.toFixed(2)}</span>
+                        <span class="text-swiftRed font-extrabold text-xs sm:text-sm">S/ ${product.price.toFixed(2)}</span>
                         
                         ${!isSelected ? `
-                            <button onclick="changeQuantity(${product.id}, 1)" class="w-7 h-7 rounded-full bg-textdark text-white hover:bg-gray-800 flex items-center justify-center transition-all shadow-elegant cursor-pointer" aria-label="Añadir producto">
+                            <button onclick="changeQuantity(${product.id}, 1)" class="w-7 h-7 rounded-full bg-swiftRed text-white hover:bg-[#b50000] flex items-center justify-center transition-all shadow-modal cursor-pointer" aria-label="Añadir producto">
                                 <i class="fa-solid fa-plus text-[10px]"></i>
                             </button>
                         ` : `
-                            <div class="flex items-center gap-1 bg-lightbg border border-cardborder rounded-full p-0.5 shadow-elegant">
-                                <button onclick="changeQuantity(${product.id}, -1)" class="w-6 h-6 rounded-full ${qty === 1 ? 'bg-red-600 hover:bg-red-700' : 'bg-textdark hover:bg-gray-800'} text-white flex items-center justify-center transition-all cursor-pointer" aria-label="Restar o Eliminar">
+                            <div class="flex items-center gap-1 bg-lightbg border border-cardborder rounded-full p-0.5 shadow-modal">
+                                <button onclick="changeQuantity(${product.id}, -1)" class="w-6 h-6 rounded-full ${qty === 1 ? 'bg-routeBlack hover:bg-bridgeCharcoal' : 'bg-swiftRed hover:bg-[#b50000]'} text-white flex items-center justify-center transition-all cursor-pointer" aria-label="Restar o Eliminar">
                                     <i class="fa-solid ${qty === 1 ? 'fa-trash-can' : 'fa-minus'} text-[9px]"></i>
                                 </button>
-                                <span class="w-5 text-center font-black text-xs text-textdark">${qty}</span>
-                                <button onclick="changeQuantity(${product.id}, 1)" class="w-6 h-6 rounded-full bg-textdark text-white hover:bg-gray-800 flex items-center justify-center transition-all cursor-pointer" aria-label="Sumar">
+                                <span class="w-5 text-center font-black text-xs text-routeBlack">${qty}</span>
+                                <button onclick="changeQuantity(${product.id}, 1)" class="w-6 h-6 rounded-full bg-swiftRed text-white hover:bg-[#b50000] flex items-center justify-center transition-all cursor-pointer" aria-label="Sumar">
                                     <i class="fa-solid fa-plus text-[9px]"></i>
                                 </button>
                             </div>
@@ -471,7 +462,7 @@
                 delete cart[productId];
             }
 
-            renderProducts(currentFilter === 'todos' ? products : products.filter(p => p.category === currentFilter));
+            renderProducts(products.filter(p => p.category === currentFilter));
             updateSummary();
         }
 
@@ -495,7 +486,7 @@
         function openCartModal() {
             const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
             if (totalItems === 0) {
-                showCustomToast('Selecciona al menos un producto pulsando en las tarjetas.');
+                showCustomToast('Selecciona al menos un producto.');
                 return;
             }
 
@@ -512,10 +503,10 @@
                     container.innerHTML += `
                         <div class="flex justify-between items-center bg-lightbg p-2.5 rounded-xl border border-cardborder shadow-elegant">
                             <div>
-                                <h4 class="font-bold text-textdark text-xs">${product.name}</h4>
-                                <p class="text-[10px] text-textmuted">Cantidad: ${qty} | S/ ${product.price.toFixed(2)} c/u</p>
+                                <h4 class="font-bold text-routeBlack text-xs">${product.name}</h4>
+                                <p class="text-[10px] text-bridgeCharcoal">Cantidad: ${qty} | S/ ${product.price.toFixed(2)} c/u</p>
                             </div>
-                            <span class="font-black text-textdark text-xs">S/ ${subtotal.toFixed(2)}</span>
+                            <span class="font-black text-swiftRed text-xs">S/ ${subtotal.toFixed(2)}</span>
                         </div>
                     `;
                 }
@@ -535,7 +526,6 @@
             document.body.classList.remove('modal-open');
         }
 
-        // Construir listado de provincias
         function buildProvinceList(filterText = '') {
             const container = document.getElementById('provinceListContainer');
             if (!container) return;
@@ -545,15 +535,15 @@
                 const filteredList = group.list.filter(prov => prov.toLowerCase().includes(filterText.toLowerCase()));
                 if (filteredList.length > 0) {
                     const regionTitle = document.createElement('div');
-                    regionTitle.className = 'text-[10px] font-black uppercase tracking-wider text-textmuted px-3 py-1.5 bg-lightbg mt-2 rounded-lg border border-cardborder';
+                    regionTitle.className = 'text-[10px] font-black uppercase tracking-wider text-swiftRed px-3 py-1.5 bg-lightbg mt-2 rounded-lg border border-cardborder';
                     regionTitle.textContent = group.region;
                     container.appendChild(regionTitle);
 
                     filteredList.forEach(prov => {
                         const item = document.createElement('button');
                         item.type = 'button';
-                        item.className = 'w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold text-textdark hover:bg-gray-100 transition-colors flex items-center justify-between group cursor-pointer';
-                        item.innerHTML = `<span>${prov}</span> <i class="fa-solid fa-check opacity-0 group-hover:opacity-100 text-textdark text-[10px]"></i>`;
+                        item.className = 'w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold text-routeBlack hover:bg-gray-100 transition-colors flex items-center justify-between group cursor-pointer';
+                        item.innerHTML = `<span>${prov}</span> <i class="fa-solid fa-check opacity-0 group-hover:opacity-100 text-swiftRed text-[10px]"></i>`;
                         item.onclick = (e) => {
                             e.preventDefault();
                             selectProvince(prov);
@@ -590,8 +580,8 @@
             const textSpan = document.getElementById('selectedProvinceText');
             if (textSpan) {
                 textSpan.textContent = provinceName;
-                textSpan.classList.remove('text-textmuted');
-                textSpan.classList.add('text-textdark', 'font-bold');
+                textSpan.classList.remove('text-bridgeCharcoal');
+                textSpan.classList.add('text-routeBlack', 'font-bold');
             }
             closeProvinceDropdown();
         }
@@ -605,12 +595,12 @@
             const province = document.getElementById('clientProvince').value;
 
             if (!/^[0-9]{9}$/.test(phone)) {
-                showCustomToast('Por favor, ingresa un número celular peruano válido de 9 dígitos.');
+                showCustomToast('Ingresa un número celular peruano de 9 dígitos.');
                 return;
             }
 
             if (!province) {
-                showCustomToast('Por favor, selecciona tu provincia de destino.');
+                showCustomToast('Selecciona tu provincia.');
                 return;
             }
 
@@ -643,15 +633,15 @@
             window.open(whatsappUrl, '_blank');
 
             cart = {};
-            renderProducts(products);
+            renderProducts(products.filter(p => p.category === currentFilter));
             updateSummary();
             closeCartModal();
             document.getElementById('orderForm').reset();
             const textSpan = document.getElementById('selectedProvinceText');
             if (textSpan) {
                 textSpan.textContent = 'Selecciona tu provincia en Perú';
-                textSpan.classList.add('text-textmuted');
-                textSpan.classList.remove('text-textdark', 'font-bold');
+                textSpan.classList.add('text-bridgeCharcoal');
+                textSpan.classList.remove('text-routeBlack', 'font-bold');
             }
         }
     </script>
