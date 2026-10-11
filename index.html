@@ -28,7 +28,8 @@
                         'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08)',
                         'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.18), 0 10px 15px -5px rgba(0, 0, 0, 0.1)',
                         'modal': '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
-                        'dynamic': '0 10px 30px rgba(0, 0, 0, 0.3)'
+                        'dynamic': '0 10px 30px rgba(0, 0, 0, 0.3)',
+                        'logo-shadow': '0 4px 14px rgba(0, 0, 0, 0.18)'
                     }
                 }
             }
@@ -67,13 +68,13 @@
     <!-- Notificación Estilo Dynamic Island limpia y centrada -->
     <div id="toastContainer" class="fixed top-4 left-0 right-0 mx-auto w-max max-w-[90vw] z-50 pointer-events-none flex flex-col items-center"></div>
 
-    <!-- Cabecera Minimalista con logo al ras superior total y mayor tamaño -->
-    <header class="sticky top-0 z-40 bg-paletteWhite/95 backdrop-blur-md border-b border-[#D9D9D9] px-4 pt-0 pb-0 shadow-modal">
+    <!-- Cabecera Minimalista con Logo en Texto Negro Uniforme y Sombra -->
+    <header class="sticky top-0 z-40 bg-paletteWhite/95 backdrop-blur-md border-b border-[#D9D9D9] px-4 py-0 shadow-modal">
         <div class="flex items-center justify-between max-w-xl mx-auto h-16">
-            <!-- Logo más grande y pegado al ras superior -->
-            <div class="flex items-center -ml-1">
-                <img src="img/logo.png" alt="TIENDOO Logo" class="h-16 w-auto object-contain block m-0 p-0" onerror="this.src='https://placehold.co/180x400/FFFFFF/000000?text=TIENDOO'">
-            </div>
+            <!-- Logo en texto negro uniforme, grande y con sombra elegante -->
+            <a href="#" class="flex items-center no-underline group cursor-pointer -ml-1">
+                <span class="text-2xl sm:text-3xl font-black tracking-tight text-paletteBlack drop-shadow-logo-shadow group-hover:opacity-80 transition-opacity">TIENDOO</span>
+            </a>
 
             <!-- Bolsa de compras dentro de un contenedor cuadrado con esquinas redondeadas y borde -->
             <button onclick="openCartModal()" id="headerCartBtn" class="flex items-center gap-2 py-2 px-3 rounded-2xl bg-[#D9D9D9]/20 border border-[#D9D9D9] hover:border-[#FE0000] transition-all cursor-pointer shadow-elegant">
