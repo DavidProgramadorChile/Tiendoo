@@ -2,622 +2,526 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TIENDOO - Arroz Peruano</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiendoo — Venta de Arroz en Perú 🇵🇪</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        paletteRed: '#FE0000',
-                        paletteLightGrey: '#D9D9D9',
-                        paletteWhite: '#FFFFFF',
-                        paletteBlack: '#000000',
-                        paletteDarkGrey: '#191919',
-                    },
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'elegant': '0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08)',
-                        'hover': '0 20px 35px -10px rgba(0, 0, 0, 0.18), 0 10px 15px -5px rgba(0, 0, 0, 0.1)',
-                        'modal': '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
-                        'dynamic': '0 10px 30px rgba(0, 0, 0, 0.3)',
-                        'logo-shadow': '0 4px 14px rgba(0, 0, 0, 0.18)'
-                    }
-                }
-            }
-        }
-    </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #FFFFFF;
             color: #000000;
-            font-family: 'Montserrat', sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
-        .no-scrollbar::-webkit-scrollbar {
+        .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
-        .no-scrollbar {
+        .hide-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        @keyframes dynamicIslandIn {
-            0% { opacity: 0; transform: translateY(-15px) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .animate-dynamic {
-            animation: dynamicIslandIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        body.modal-open {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-        }
     </style>
 </head>
-<body class="bg-paletteWhite text-paletteBlack min-h-screen flex flex-col justify-between selection:bg-[#FE0000] selection:text-white">
+<body class="bg-white text-black min-h-screen flex flex-col selection:bg-black selection:text-white">
 
-    <!-- Notificación Estilo Dynamic Island limpia y centrada -->
-    <div id="toastContainer" class="fixed top-4 left-0 right-0 mx-auto w-max max-w-[90vw] z-50 pointer-events-none flex flex-col items-center"></div>
+    <!-- CABECERA MINIMALISTA CON BANDERA Y LOGO ELEGANTE -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 flex flex-col">
+        <!-- Franja de la bandera del Perú dividida en 3 columnas exactas (1/3 rojo, 1/3 blanco, 1/3 rojo) -->
+        <div class="grid grid-cols-3 w-full h-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.15)]">
+            <div class="bg-[#D91023]"></div>
+            <div class="bg-white border-l border-r border-black/15"></div>
+            <div class="bg-[#D91023]"></div>
+        </div>
 
-    <!-- Cabecera Minimalista con Logo en Texto Negro Uniforme y Sombra -->
-    <header class="sticky top-0 z-40 bg-paletteWhite/95 backdrop-blur-md border-b border-[#D9D9D9] px-4 py-0 shadow-modal">
-        <div class="flex items-center justify-between max-w-xl mx-auto h-16">
-            <!-- Logo en texto negro uniforme, grande y con sombra elegante -->
-            <a href="#" class="flex items-center no-underline group cursor-pointer -ml-1">
-                <span class="text-2xl sm:text-3xl font-black tracking-tight text-paletteBlack drop-shadow-logo-shadow group-hover:opacity-80 transition-opacity">TIENDOO</span>
-            </a>
-
-            <!-- Bolsa de compras dentro de un contenedor cuadrado con esquinas redondeadas y borde -->
-            <button onclick="openCartModal()" id="headerCartBtn" class="flex items-center gap-2 py-2 px-3 rounded-2xl bg-[#D9D9D9]/20 border border-[#D9D9D9] hover:border-[#FE0000] transition-all cursor-pointer shadow-elegant">
-                <i class="fa-solid fa-bag-shopping text-[#FE0000] text-base"></i>
-                <span id="headerSelectedCount" class="font-black text-sm text-paletteBlack">0</span>
+        <div class="px-4 py-3 flex items-center justify-between">
+            <button id="menu-btn" class="w-10 h-10 flex items-center justify-center text-xl text-black hover:bg-gray-100 rounded-full transition-colors cursor-pointer">
+                <i class="fa-solid fa-bars"></i>
             </button>
+            
+            <!-- Logo con tamaño destacado y sombra tipográfica elegante -->
+            <div class="text-center">
+                <h1 class="text-base font-black tracking-[0.25em] uppercase text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                    TIENDOO
+                </h1>
+            </div>
+
+            <div class="w-10 h-10"></div>
         </div>
     </header>
 
-    <!-- Categorías Numeradas -->
-    <section class="max-w-xl mx-auto w-full px-4 pt-4 pb-2">
-        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-            <button onclick="filterCategory('Cat 01')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-[#FE0000] text-white shadow-modal flex-shrink-0 cursor-pointer">
-                Categoría 01 (3)
-            </button>
-            <button onclick="filterCategory('Cat 02')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-paletteWhite text-[#191919] border border-[#D9D9D9] hover:border-[#FE0000] shadow-modal flex-shrink-0 cursor-pointer">
-                Categoría 02 (2)
-            </button>
-            <button onclick="filterCategory('Cat 03')" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all bg-paletteWhite text-[#191919] border border-[#D9D9D9] hover:border-[#FE0000] shadow-modal flex-shrink-0 cursor-pointer">
-                Categoría 03 (3)
-            </button>
+    <!-- PANEL DE RESUMEN SUPERIOR CON SOMBRA ELEGANTE -->
+    <section class="bg-gray-100/90 backdrop-blur-md border-b border-gray-200 px-4 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.06)] relative z-20">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div>
+                <span id="selected-summary-text" class="text-xs font-bold text-black uppercase tracking-wide">0 productos seleccionados</span>
+                <div class="bg-gray-300 h-1.5 rounded-full mt-1.5 w-36 overflow-hidden">
+                    <div id="progress-bar" class="bg-black h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="text-[11px] text-gray-600 block">Total Parcial</span>
+                <span id="header-total-price" class="text-sm font-extrabold text-black">S/ 0.00</span>
+            </div>
         </div>
     </section>
 
-    <!-- Cuadrícula de Productos (2 Columnas Mobile-First) -->
-    <main class="max-w-xl mx-auto w-full px-4 py-2 flex-1 mb-6">
-        <div id="productGrid" class="grid grid-cols-2 gap-3.5">
-            <!-- Inyectado por JavaScript -->
+    <!-- CATEGORÍAS NUMERADAS -->
+    <nav class="py-3 px-4 overflow-x-auto hide-scrollbar border-b border-gray-200 bg-white sticky top-[71px] z-30">
+        <div class="flex space-x-2 min-w-max" id="categories-container">
+            <button onclick="filterCategory('all')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-black text-white transition-all cursor-pointer shadow-sm">Todos</button>
+            <button onclick="filterCategory('Cat 01')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all cursor-pointer">Categoría 01 (Extra)</button>
+            <button onclick="filterCategory('Cat 02')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all cursor-pointer">Categoría 02 (Añejo)</button>
+            <button onclick="filterCategory('Cat 03')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all cursor-pointer">Categoría 03 (Especial)</button>
         </div>
+    </nav>
+
+    <!-- CUADRÍCULA DE PRODUCTOS -->
+    <main class="flex-1 max-w-md w-full mx-auto px-4 py-5 mb-28">
+        <div id="products-grid" class="grid grid-cols-2 gap-3.5"></div>
     </main>
 
-    <!-- Botón Flotante Permanente de WhatsApp -->
-    <div class="fixed bottom-5 right-5 z-40">
-        <a href="https://wa.me/51986389251?text=Hola%2C%20tengo%20una%20consulta%20sobre%20los%20arroces%20de%20Tiendoo." target="_blank" class="w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform text-xl cursor-pointer" aria-label="Soporte WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
-    </div>
+    <!-- BOTÓN FLOTANTE DE WHATSAPP (SE OCULTA HACIA ABAJO CUANDO HAY PRODUCTOS) -->
+    <a id="whatsapp-float-btn" href="https://wa.me/51986389251?text=Hola%20Tiendoo,%20deseo%20realizar%20una%20consulta%20sobre%20sus%20arroces." target="_blank" class="fixed bottom-6 right-5 z-30 bg-[#25D366] hover:bg-[#20ba5a] text-white w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-    <!-- Modal de Detalle de Producto -->
-    <div id="productDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-paletteWhite border border-[#D9D9D9] rounded-3xl max-w-md w-full p-6 shadow-modal relative animate-fade-in overflow-hidden">
-            <button onclick="closeProductModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#D9D9D9] text-paletteBlack flex items-center justify-center hover:bg-gray-300 transition-colors border border-[#D9D9D9] shadow-modal z-10 cursor-pointer">
-                <i class="fa-solid fa-xmark text-xs"></i>
+    <!-- BARRA INFERIOR DE ACCIÓN RÁPIDA CON SOMBRA PRONUNCIADA -->
+    <div id="checkout-bar" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 z-40 shadow-[0_-8px_25px_rgba(0,0,0,0.12)] transition-transform duration-300 translate-y-full">
+        <div class="max-w-md mx-auto flex items-center justify-between gap-3">
+            <div>
+                <span class="text-xs text-gray-600 block">Total a Pagar</span>
+                <span id="footer-total-price" class="text-lg font-black text-black">S/ 0.00</span>
+            </div>
+            <button onclick="openCheckoutModal()" class="flex-1 bg-black hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+                <span>Revisar y Comprar</span>
+                <i class="fa-solid fa-arrow-right"></i>
             </button>
-            
-            <div class="relative w-full h-48 rounded-2xl overflow-hidden bg-[#D9D9D9]/30 mb-4 border border-[#D9D9D9] shadow-elegant">
-                <img id="modalProductImg" src="" alt="Arroz" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/D9D9D9/191919?text=Arroz+Tiendoo'">
-                <span id="modalProductCat" class="absolute top-3 left-3 bg-paletteWhite/90 backdrop-blur-md text-[10px] text-paletteBlack font-semibold px-2.5 py-1 rounded-full border border-[#D9D9D9] shadow-elegant"></span>
-            </div>
-
-            <h3 id="modalProductName" class="text-base font-black text-paletteBlack mb-1"></h3>
-            <p id="modalProductPrice" class="text-sm font-extrabold text-[#FE0000] mb-4"></p>
-            
-            <div class="mb-5">
-                <span class="text-[10px] uppercase font-bold tracking-wider text-[#191919] block mb-1.5">Descripción</span>
-                <div class="bg-[#D9D9D9]/30 p-3.5 rounded-2xl border border-[#D9D9D9] shadow-elegant">
-                    <p id="modalProductDesc" class="text-xs text-[#191919] leading-relaxed"></p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <button onclick="addFromDetailModal()" class="w-full bg-[#191919] hover:bg-paletteBlack text-paletteWhite font-black py-3 rounded-xl transition-all shadow-hover flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
-                    <i class="fa-solid fa-cart-plus text-[#FE0000]"></i>
-                    <span>Agregar al Carrito</span>
-                </button>
-            </div>
         </div>
     </div>
 
-    <!-- Modal de Checkout / Formulario de Envío -->
-    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-paletteWhite border border-[#D9D9D9] rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-6 shadow-modal relative animate-fade-in max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between mb-4 border-b border-[#D9D9D9] pb-3">
-                <div>
-                    <span class="text-[10px] uppercase font-bold tracking-widest text-[#FE0000]">Checkout Oficial 🇵🇪</span>
-                    <h3 class="text-base font-black text-paletteBlack mt-0.5">Resumen y Datos de Envío</h3>
-                </div>
-                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-[#D9D9D9] text-paletteBlack flex items-center justify-center hover:bg-gray-300 transition-colors border border-[#D9D9D9] shadow-modal cursor-pointer">
-                    <i class="fa-solid fa-xmark text-xs"></i>
+    <!-- MODAL / PANEL LATERAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden transition-opacity opacity-0">
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white flex flex-col shadow-2xl transition-transform transform translate-x-full duration-300" id="cart-drawer">
+            <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-100">
+                <h2 class="font-extrabold text-base uppercase tracking-wider flex items-center gap-2 text-black">
+                    <i class="fa-solid fa-bag-shopping text-black"></i> Tu Pedido de Arroz
+                </h2>
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-black transition-colors cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-
-            <!-- Resumen de items seleccionados -->
-            <div id="cartSummaryList" class="mb-4 space-y-2 max-h-40 overflow-y-auto pr-1 text-xs">
-                <!-- Inyectado por JS -->
-            </div>
-
-            <div class="border-t border-[#D9D9D9] pt-3 mb-4 flex justify-between items-center text-xs font-black">
-                <span class="text-[#191919]">Total a Pagar:</span>
-                <span id="modalTotalPrice" class="text-[#FE0000] text-sm">S/ 0.00</span>
-            </div>
-
-            <!-- Formulario de Envío y Pago -->
-            <form id="orderForm" onsubmit="sendToWhatsApp(event)" class="space-y-3.5 text-left">
-                <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-[#191919] mb-1">Nombre y Apellidos *</label>
-                    <input type="text" id="clientName" required class="w-full bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-xl px-3.5 py-2.5 text-xs text-paletteBlack focus:border-[#FE0000] outline-none transition-colors shadow-elegant" placeholder="Ej. María Quispe Rojas">
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-[#191919] mb-1">Dirección de Entrega *</label>
-                    <input type="text" id="clientAddress" required class="w-full bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-xl px-3.5 py-2.5 text-xs text-paletteBlack focus:border-[#FE0000] outline-none transition-colors shadow-elegant" placeholder="Ej. Jr. Huancavelica 450, Int. 2">
-                </div>
-
-                <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-[#191919] mb-1">Número de Teléfono *</label>
-                    <div class="flex rounded-xl border border-[#D9D9D9] overflow-hidden bg-[#D9D9D9]/30 focus-within:border-[#FE0000] transition-colors shadow-elegant">
-                        <div class="flex items-center gap-1 px-3 bg-[#D9D9D9] border-r border-[#D9D9D9] text-xs font-semibold text-paletteBlack">
-                            <span>🇵🇪</span>
-                            <span>+51</span>
-                        </div>
-                        <input type="tel" id="clientPhone" required pattern="[0-9]{9}" maxlength="9" class="w-full px-3 py-2.5 outline-none text-xs bg-transparent text-paletteBlack" placeholder="987654321">
-                    </div>
-                    <span class="text-[9px] text-[#191919] mt-1 block">Celular peruano de 9 dígitos.</span>
-                </div>
-
-                <!-- Selector de Provincias Interactivo -->
-                <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-[#191919] mb-1">Provincia de Destino *</label>
-                    <div class="relative">
-                        <button type="button" id="provinceSelectBtn" class="w-full bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-xl px-3.5 py-2.5 text-xs text-paletteBlack text-left flex items-center justify-between shadow-elegant focus:border-[#FE0000] outline-none transition-colors cursor-pointer">
-                            <span id="selectedProvinceText" class="text-[#191919]">Selecciona tu provincia en Perú</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-[#191919] pointer-events-none"></i>
-                        </button>
-                        <input type="hidden" id="clientProvince" required>
-                    </div>
-                </div>
-
-                <!-- Selector de Método de Pago Visual y Elegante con Iconos -->
-                <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-[#191919] mb-1">Método de Pago *</label>
-                    <div class="relative">
-                        <button type="button" id="paymentSelectBtn" class="w-full bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-xl px-3.5 py-2.5 text-xs text-paletteBlack text-left flex items-center justify-between shadow-elegant focus:border-[#FE0000] outline-none transition-colors cursor-pointer">
-                            <span id="selectedPaymentText" class="text-[#191919] flex items-center gap-2">Selecciona tu método de pago</span>
-                            <i class="fa-solid fa-chevron-down text-[10px] text-[#191919] pointer-events-none"></i>
-                        </button>
-                        <input type="hidden" id="clientPayment" required>
-                    </div>
-                </div>
-
-                <div class="pt-2">
-                    <button type="submit" class="w-full bg-[#FE0000] hover:bg-[#d40000] text-paletteWhite font-bold py-3.5 rounded-xl transition-all shadow-modal flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
-                        <i class="fa-brands fa-whatsapp text-base"></i>
-                        <span>Enviar Pedido a WhatsApp</span>
-                    </button>
-                </div>
-            </form>
+            <div class="flex-1 overflow-y-auto p-4 space-y-4" id="modal-body-content"></div>
         </div>
     </div>
 
-    <!-- Modal Selector de Provincias del Perú -->
-    <div id="provinceModal" class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-paletteWhite border border-[#D9D9D9] rounded-3xl max-w-md w-full p-5 shadow-modal relative animate-fade-in flex flex-col h-[80vh]">
-            <div class="flex items-center justify-between mb-3 pb-3 border-b border-[#D9D9D9]">
-                <div>
-                    <span class="text-[9px] uppercase font-bold tracking-widest text-[#FE0000]">Perú 🇵🇪</span>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-paletteBlack">Selecciona tu Provincia</h4>
-                </div>
-                <button type="button" id="closeProvinceModalBtn" class="w-8 h-8 rounded-full bg-[#D9D9D9] text-paletteBlack flex items-center justify-center border border-[#D9D9D9] shadow-modal cursor-pointer hover:bg-gray-300 transition-colors">
-                    <i class="fa-solid fa-xmark text-xs"></i>
-                </button>
-            </div>
-            
-            <div class="mb-3">
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#191919] text-xs"></i>
-                    <input type="text" id="provinceSearchInput" placeholder="Escribe para buscar tu provincia..." class="w-full bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-xl pl-9 pr-3 py-2.5 text-xs text-paletteBlack outline-none focus:border-[#FE0000] shadow-elegant">
-                </div>
-            </div>
-
-            <div id="provinceListContainer" class="overflow-y-auto space-y-1 pr-1 flex-1 text-xs">
-                <!-- Inyectado por JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Selector de Métodos de Pago Elegante -->
-    <div id="paymentModal" class="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-paletteWhite border border-[#D9D9D9] rounded-3xl max-w-sm w-full p-5 shadow-modal relative animate-fade-in">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#D9D9D9]">
-                <div>
-                    <span class="text-[9px] uppercase font-bold tracking-widest text-[#FE0000]">Tiendoo 🇵🇪</span>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-paletteBlack">Elige Método de Pago</h4>
-                </div>
-                <button type="button" onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-[#D9D9D9] text-paletteBlack flex items-center justify-center border border-[#D9D9D9] shadow-modal cursor-pointer hover:bg-gray-300 transition-colors">
-                    <i class="fa-solid fa-xmark text-xs"></i>
-                </button>
-            </div>
-            <div class="space-y-2 text-xs">
-                <button type="button" onclick="selectPayment('Yape / Plin', 'fa-mobile-screen-button')" class="w-full text-left p-3.5 rounded-2xl bg-[#D9D9D9]/30 hover:bg-[#D9D9D9]/60 border border-[#D9D9D9] flex items-center justify-between font-bold text-paletteBlack transition-all shadow-elegant cursor-pointer">
-                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-mobile-screen-button text-[#FE0000] text-base"></i> Yape / Plin</span>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-[#191919]"></i>
-                </button>
-                <button type="button" onclick="selectPayment('Efectivo', 'fa-money-bill-wave')" class="w-full text-left p-3.5 rounded-2xl bg-[#D9D9D9]/30 hover:bg-[#D9D9D9]/60 border border-[#D9D9D9] flex items-center justify-between font-bold text-paletteBlack transition-all shadow-elegant cursor-pointer">
-                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-money-bill-wave text-[#FE0000] text-base"></i> Efectivo</span>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-[#191919]"></i>
-                </button>
-                <button type="button" onclick="selectPayment('Transferencia Bancaria', 'fa-building-columns')" class="w-full text-left p-3.5 rounded-2xl bg-[#D9D9D9]/30 hover:bg-[#D9D9D9]/60 border border-[#D9D9D9] flex items-center justify-between font-bold text-paletteBlack transition-all shadow-elegant cursor-pointer">
-                    <span class="flex items-center gap-2.5"><i class="fa-solid fa-building-columns text-[#FE0000] text-base"></i> Transferencia Bancaria</span>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-[#191919]"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="max-w-xl mx-auto w-full px-4 py-6 text-center text-[10px] text-[#191919] border-t border-[#D9D9D9] mt-4">
-        <p>TIENDOO 🇵🇪 — Venta oficial de arroz peruano seleccionado.</p>
-        <p class="mt-1">Atención directa WhatsApp: +51 986 389251</p>
-    </footer>
-
+    <!-- SCRIPT DE FUNCIONALIDAD -->
     <script>
         const products = [
-            { id: 1, name: "P.D. Rojo", price: 165.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz extra seleccionado de grano uniforme, ideal para preparaciones diarias con excelente rendimiento y textura suelta." },
-            { id: 2, name: "P.D. Naranja", price: 155.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Arroz de alta calidad con óptimo porcentaje de grano entero. Aporta consistencia y sabor inigualable a tus almuerzos." },
-            { id: 3, name: "P.D. Azul", price: 170.00, category: "Cat 01", image: "img/arroz.jpg", desc: "Selección premium superior. Grano seleccionado sometido a rigurosos controles para asegurar el más alto estándar peruano." },
-            { id: 4, name: "P.D. Añejo", price: 190.00, category: "Cat 02", image: "img/arroz.jpg", desc: "Arroz añejado naturalmente para una cocción más firme y consistente. El preferido por chefs y expertos culinarios." },
-            { id: 5, name: "Caserita Amarilla", price: 140.00, category: "Cat 02", image: "img/arroz.jpg", desc: "Arroz tradicional de gran rendimiento económico y excelente sabor hogareño. Ideal para familias y negocios." },
-            { id: 6, name: "Caserita Amarilla F.", price: 150.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Arroz fortificado con nutrientes esenciales. Granos seleccionados que cuidan la alimentación de tu hogar." },
-            { id: 7, name: "Caserita Amarilla Laminado F.", price: 165.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Proceso especial de laminado que optimiza el tiempo de cocción sin perder consistencia ni valor nutricional." },
-            { id: 8, name: "Cholita Fucsia F.", price: 165.00, category: "Cat 03", image: "img/arroz.jpg", desc: "Arroz de gran demanda por su excelente grano entero y calidad garantizada en cada presentación." }
+            { id: 1, name: "P.D. Rojo", price: 165.00, category: "Cat 01", image: "img/arroz.jpg" },
+            { id: 2, name: "P.D. Naranja", price: 155.00, category: "Cat 01", image: "img/arroz.jpg" },
+            { id: 3, name: "P.D. Azul", price: 170.00, category: "Cat 01", image: "img/arroz.jpg" },
+            { id: 4, name: "P.D. Añejo", price: 190.00, category: "Cat 02", image: "img/arroz.jpg" },
+            { id: 5, name: "Caserita Amarilla", price: 140.00, category: "Cat 03", image: "img/arroz.jpg" },
+            { id: 6, name: "Caserita Amarilla F.", price: 150.00, category: "Cat 03", image: "img/arroz.jpg" },
+            { id: 7, name: "Caserita Amarilla Laminado F.", price: 165.00, category: "Cat 03", image: "img/arroz.jpg" },
+            { id: 8, name: "Cholita Fucsia F.", price: 165.00, category: "Cat 02", image: "img/arroz.jpg" }
         ];
 
         const peruvianProvinces = [
-            { region: "Amazonas", list: ["Chachapoyas", "Bagua", "Bongará", "Condorcanqui", "Luya", "Rodríguez de Mendoza", "Utcubamba"] },
-            { region: "Áncash", list: ["Huaraz", "Aija", "Antonio Raymondi", "Asunción", "Bolognesi", "Carhuaz", "Casma", "Corongo", "Huari", "Huarmey", "Huaylas", "Mariscal Luzuriaga", "Ocros", "Pallasca", "Pomabamba", "Recuay", "Santa (Chimbote)", "Sihuas", "Yungay"] },
-            { region: "Apurímac", list: ["Abancay", "Andahuaylas", "Antabamba", "Aymaraes", "Cotabambas", "Chincheros", "Grau"] },
-            { region: "Arequipa", list: ["Arequipa", "Camaná", "Caravelí", "Castilla", "Caylloma", "Condesuyos", "Islay", "La Unión"] },
-            { region: "Ayacucho", list: ["Huamanga", "Cangallo", "Huanca Sancos", "Huanta", "La Mar", "Lucanas", "Parinacochas", "Páucar del Sara Sara", "Sucre", "Víctor Fajardo", "Vilcas Huamán"] },
-            { region: "Cajamarca", list: ["Cajamarca", "Cajabamba", "Celendín", "Chota", "Contumazá", "Cutervo", "Hualgayoc", "Jaén", "San Ignacio", "San Marcos", "San Miguel", "San Pablo", "Santa Cruz"] },
-            { region: "Callao", list: ["Callao"] },
-            { region: "Cusco", list: ["Cusco", "Acomayo", "Anta", "Calca", "Canas", "Canchis", "Chumbivilcas", "Espinar", "La Convención", "Paruro", "Paucartambo", "Quispicanchi", "Urubamba"] },
-            { region: "Huancavelica", list: ["Huancavelica", "Acobamba", "Angaraes", "Castrovirreyna", "Churcampa", "Huaytará", "Tayacaja"] },
-            { region: "Huánuco", list: ["Huánuco", "Ambo", "Dos de Mayo", "Huacaybamba", "Huamalíes", "Leoncio Prado (Tingo María)", "Marañón", "Pachitea", "Puerto Inca", "Lauricocha", "Yarowilca"] },
-            { region: "Ica", list: ["Ica", "Chincha", "Nazca", "Palpa", "Pisco"] },
-            { region: "Junín", list: ["Huancayo", "Concepción", "Chanchamayo", "Jauja", "Junín", "Satipo", "Tarma", "Yauli", "Chupaca"] },
-            { region: "La Libertad", list: ["Trujillo", "Ascope", "Bolívar", "Chepén", "Gran Chimú", "Julcán", "Otuzco", "Pacasmayo", "Pataz", "Sánchez Carrión", "Santiago de Chuco", "Virú"] },
-            { region: "Lambayeque", list: ["Chiclayo", "Ferreñafe", "Lambayeque"] },
-            { region: "Lima", list: ["Lima Metropolitana", "Barranca", "Cajatambo", "Canta", "Cañete", "Huaral", "Huarochirí", "Huaura (Huacho)", "Oyón", "Yauyos"] },
-            { region: "Loreto", list: ["Maynas (Iquitos)", "Alto Amazonas", "Loreto", "Mariscal Ramón Castilla", "Requena", "Ucayali", "Datem del Marañón", "Putumayo"] },
-            { region: "Madre de Dios", list: ["Tambopata", "Manu", "Tahuamanu"] },
-            { region: "Moquegua", list: ["Mariscal Nieto", "General Sánchez Cerro", "Ilo"] },
-            { region: "Pasco", list: ["Pasco", "Daniel Alcides Carrión", "Oxapampa"] },
-            { region: "Piura", list: ["Piura", "Ayabaca", "Huancabamba", "Morropón", "Paita", "Sullana", "Talara", "Sechura"] },
-            { region: "Puno", list: ["Puno", "Azángaro", "Carabaya", "Chucuito", "El Collao", "Huancané", "Lampa", "Melgar", "Moho", "San Antonio de Putina", "San Román (Juliaca)", "Sandia", "Yunguyo"] },
-            { region: "San Martín", list: ["Moyobamba", "Bellavista", "El Dorado", "Huallaga", "Lamas", "Mariscal Cáceres", "Picota", "San Martín (Tarapoto)", "Tocache", "Rioja"] },
-            { region: "Tacna", list: ["Tacna", "Candarave", "Jorge Basadre", "Tarata"] },
-            { region: "Tumbes", list: ["Tumbes", "Contralmirante Villar", "Zarumilla"] },
-            { region: "Ucayali", list: ["Coronel Portillo (Pucallpa)", "Atalaya", "Padre Abad", "Purús"] }
+            "Lima", "Callao", "Arequipa", "Trujillo", "Chiclayo", "Piura", "Iquitos", "Cusco", 
+            "Chimbote", "Huancayo", "Tacna", "Juliaca", "Ica", "Cajamarca", "Pucallpa", 
+            "Sullana", "Ayacucho", "Chincha Alta", "Huánuco", "Huaraz", "Tumbes", "Puno", 
+            "Tarapoto", "Huaral", "Pisco", "Talara", "Jaén", "San Román", "Barranca", 
+            "Abancay", "Cerro de Pasco", "Moquegua", "Puerto Maldonado", "Bagua", "Chachapoyas", 
+            "Yurimaguas", "Tingo María", "Sicuani", "Camaná", "Mollendo", "Otra Provincia"
         ];
 
         let cart = {};
-        let currentFilter = 'Cat 01';
-        let currentModalProductId = null;
+        let currentFilter = 'all';
+        let isCheckoutStep = false;
+        let selectedProvince = '';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderProducts(products.filter(p => p.category === currentFilter));
-            updateSummary();
-            buildProvinceList();
-            setupListeners();
-        });
-
-        function setupListeners() {
-            const btnProv = document.getElementById('provinceSelectBtn');
-            const closeProv = document.getElementById('closeProvinceModalBtn');
-            const searchProv = document.getElementById('provinceSearchInput');
-            const btnPay = document.getElementById('paymentSelectBtn');
-
-            if (btnProv) {
-                btnProv.addEventListener('click', (e) => { e.preventDefault(); openProvinceDropdown(); });
-            }
-            if (closeProv) {
-                closeProv.addEventListener('click', (e) => { e.preventDefault(); closeProvinceDropdown(); });
-            }
-            if (searchProv) {
-                searchProv.addEventListener('input', (e) => { buildProvinceList(e.target.value); });
-            }
-            if (btnPay) {
-                btnPay.addEventListener('click', (e) => { e.preventDefault(); openPaymentModal(); });
-            }
-        }
-
-        function showCustomToast(message) {
-            const container = document.getElementById('toastContainer');
-            container.innerHTML = '';
-            const toast = document.createElement('div');
-            toast.className = 'animate-dynamic bg-[#000000] text-[#FFFFFF] text-xs font-semibold px-5 py-2.5 rounded-full shadow-dynamic border border-[#191919] whitespace-nowrap';
-            toast.innerHTML = `<span>${message}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => { if (toast.parentElement) toast.remove(); }, 3000);
-        }
-
-        function filterCategory(category) {
-            currentFilter = category;
-            const pills = document.querySelectorAll('.cat-pill');
-            pills.forEach(p => {
-                p.classList.remove('bg-[#FE0000]', 'text-white', 'shadow-modal');
-                p.classList.add('bg-paletteWhite', 'text-[#191919]', 'border', 'border-[#D9D9D9]', 'shadow-modal');
-            });
-            event.currentTarget.classList.remove('bg-paletteWhite', 'text-[#191919]', 'border', 'border-[#D9D9D9]');
-            event.currentTarget.classList.add('bg-[#FE0000]', 'text-white', 'shadow-modal');
-            renderProducts(products.filter(p => p.category === category));
-        }
-
-        function renderProducts(items) {
-            const grid = document.getElementById('productGrid');
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
             grid.innerHTML = '';
-            if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-2 text-center py-10 text-[#191919] text-xs">No hay productos en esta categoría.</div>`;
-                return;
-            }
-            items.forEach(product => {
+
+            const filtered = currentFilter === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentFilter);
+
+            filtered.forEach(product => {
                 const qty = cart[product.id] || 0;
-                const isSelected = qty > 0;
                 const card = document.createElement('div');
-                card.className = `bg-paletteWhite border border-[#D9D9D9] shadow-modal hover:shadow-hover rounded-2xl p-3 flex flex-col justify-between transition-all duration-200 relative group cursor-pointer`;
-                card.onclick = (e) => {
-                    if (e.target.closest('button')) return;
-                    openProductModal(product.id);
-                };
+                card.className = "bg-white border border-gray-200 rounded-2xl p-3 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow relative overflow-hidden";
+                
                 card.innerHTML = `
-                    <div>
-                        <div class="relative w-full h-32 sm:h-36 rounded-xl overflow-hidden bg-[#D9D9D9]/30 mb-2.5 border border-[#D9D9D9] shadow-elegant">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/D9D9D9/191919?text=Arroz+Tiendoo'">
-                            <span class="absolute top-2 left-2 bg-paletteWhite/90 backdrop-blur-md text-[9px] text-paletteBlack font-semibold px-2 py-0.5 rounded-full border border-[#D9D9D9] shadow-elegant">
-                                ${product.category.replace('Cat ', 'Cat. ')}
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-xs text-paletteBlack leading-snug mb-0.5 line-clamp-1">${product.name}</h3>
+                    <div class="relative w-full h-32 bg-gray-100 rounded-xl mb-2.5 overflow-hidden flex items-center justify-center">
+                        <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full" onerror="this.src='https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400'">
+                        <span class="absolute top-2 left-2 bg-black text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">${product.category}</span>
                     </div>
-                    <div class="mt-2.5 pt-2 border-t border-[#D9D9D9] flex items-center justify-between">
-                        <span class="text-[#FE0000] font-extrabold text-xs sm:text-sm">S/ ${product.price.toFixed(2)}</span>
-                        ${!isSelected ? `
-                            <button onclick="changeQuantity(${product.id}, 1)" class="w-7 h-7 rounded-full bg-[#FE0000] text-white hover:bg-[#d40000] flex items-center justify-center transition-all shadow-modal cursor-pointer" aria-label="Añadir">
-                                <i class="fa-solid fa-plus text-[10px]"></i>
-                            </button>
-                        ` : `
-                            <div class="flex items-center gap-1 bg-[#D9D9D9]/30 border border-[#D9D9D9] rounded-full p-0.5 shadow-modal">
-                                <button onclick="changeQuantity(${product.id}, -1)" class="w-6 h-6 rounded-full ${qty === 1 ? 'bg-[#191919] hover:bg-paletteBlack' : 'bg-[#FE0000] hover:bg-[#d40000]'} text-white flex items-center justify-center transition-all cursor-pointer">
-                                    <i class="fa-solid ${qty === 1 ? 'fa-trash-can' : 'fa-minus'} text-[9px]"></i>
+                    <div>
+                        <h3 class="text-xs font-bold text-black line-clamp-2 mb-1">${product.name}</h3>
+                        <p class="text-sm font-extrabold text-black">S/ ${product.price.toFixed(2)}</p>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-[10px] text-gray-500 font-medium">Bolsa / Saco</span>
+                        <div>
+                            ${qty === 0 ? `
+                                <button onclick="updateQty(${product.id}, 1)" class="w-7 h-7 rounded-full bg-black hover:bg-gray-800 text-white flex items-center justify-center text-xs shadow-sm transition-transform active:scale-90 cursor-pointer">
+                                    <i class="fa-solid fa-plus text-[10px]"></i>
                                 </button>
-                                <span class="w-5 text-center font-black text-xs text-paletteBlack">${qty}</span>
-                                <button onclick="changeQuantity(${product.id}, 1)" class="w-6 h-6 rounded-full bg-[#FE0000] text-white hover:bg-[#d40000] flex items-center justify-center transition-all cursor-pointer">
-                                    <i class="fa-solid fa-plus text-[9px]"></i>
-                                </button>
-                            </div>
-                        `}
+                            ` : `
+                                <div class="flex items-center space-x-1 bg-gray-100 rounded-full p-0.5 border border-gray-200">
+                                    <button onclick="updateQty(${product.id}, -1)" class="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[9px] hover:bg-gray-800 transition-colors cursor-pointer">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="text-xs font-bold px-1 text-black">${qty}</span>
+                                    <button onclick="updateQty(${product.id}, 1)" class="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[9px] hover:bg-gray-800 transition-colors cursor-pointer">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            `}
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-        }
-
-        function openProductModal(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            currentModalProductId = productId;
-            document.getElementById('modalProductImg').src = product.image;
-            document.getElementById('modalProductCat').textContent = product.category.replace('Cat ', 'Categoría ');
-            document.getElementById('modalProductName').textContent = product.name;
-            document.getElementById('modalProductPrice').textContent = `S/ ${product.price.toFixed(2)}`;
-            document.getElementById('modalProductDesc').textContent = product.desc;
-            const modal = document.getElementById('productDetailModal');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            document.body.classList.add('modal-open');
-        }
-
-        function closeProductModal() {
-            const modal = document.getElementById('productDetailModal');
-            modal.classList.add('hidden'); modal.classList.remove('flex');
-            document.body.classList.remove('modal-open');
-            currentModalProductId = null;
-        }
-
-        function addFromDetailModal() {
-            if (currentModalProductId !== null) {
-                changeQuantity(currentModalProductId, 1);
-                closeProductModal();
-            }
-        }
-
-        function changeQuantity(productId, delta) {
-            if (!cart[productId]) cart[productId] = 0;
-            cart[productId] += delta;
-            if (cart[productId] <= 0) delete cart[productId];
-            renderProducts(products.filter(p => p.category === currentFilter));
             updateSummary();
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = "cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all cursor-pointer";
+            });
+            event.target.className = "cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-black text-white transition-all cursor-pointer shadow-sm";
+            renderProducts();
+        }
+
+        function updateQty(productId, change) {
+            if (!cart[productId]) cart[productId] = 0;
+            cart[productId] += change;
+            if (cart[productId] <= 0) {
+                delete cart[productId];
+            }
+            renderProducts();
         }
 
         function updateSummary() {
-            let totalItems = 0; 
-            for (const [id, qty] of Object.entries(cart)) {
-                totalItems += qty;
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            Object.keys(cart).forEach(id => {
+                const prod = products.find(p => p.id == id);
+                if (prod) {
+                    totalItems += cart[id];
+                    totalPrice += prod.price * cart[id];
+                }
+            });
+
+            document.getElementById('selected-summary-text').innerText = `${totalItems} ${totalItems === 1 ? 'producto seleccionado' : 'productos seleccionados'}`;
+            
+            const progressPercent = Math.min((totalItems / 8) * 100, 100);
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            const formattedPrice = `S/ ${totalPrice.toFixed(2)}`;
+            document.getElementById('header-total-price').innerText = formattedPrice;
+            document.getElementById('footer-total-price').innerText = formattedPrice;
+
+            const checkoutBar = document.getElementById('checkout-bar');
+            const waBtn = document.getElementById('whatsapp-float-btn');
+
+            if (totalItems > 0) {
+                checkoutBar.classList.remove('translate-y-full');
+                // Ocultar el botón de WhatsApp deslizándolo hacia abajo fuera de la pantalla
+                waBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            } else {
+                checkoutBar.classList.add('translate-y-full');
+                // Mostrar de vuelta el botón de WhatsApp en su sitio
+                waBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                closeCartModal();
             }
-            document.getElementById('headerSelectedCount').textContent = totalItems;
         }
 
-        function openCartModal() {
-            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
-            if (totalItems === 0) { showCustomToast('Selecciona al menos un producto'); return; }
-            const container = document.getElementById('cartSummaryList');
-            container.innerHTML = ''; let totalPrice = 0;
-            for (const [id, qty] of Object.entries(cart)) {
-                const product = products.find(p => p.id == id);
-                if (product) {
-                    const subtotal = product.price * qty;
-                    totalPrice += subtotal;
-                    container.innerHTML += `
-                        <div class="flex justify-between items-center bg-[#D9D9D9]/30 p-2.5 rounded-xl border border-[#D9D9D9] shadow-elegant">
-                            <div>
-                                <h4 class="font-bold text-paletteBlack text-xs">${product.name}</h4>
-                                <p class="text-[10px] text-[#191919]">Cantidad: ${qty} | S/ ${product.price.toFixed(2)} c/u</p>
-                            </div>
-                            <span class="font-black text-[#FE0000] text-xs">S/ ${subtotal.toFixed(2)}</span>
-                        </div>
-                    `;
-                }
-            }
-            document.getElementById('modalTotalPrice').textContent = `S/ ${totalPrice.toFixed(2)}`;
-            const modal = document.getElementById('checkoutModal');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            document.body.classList.add('modal-open');
+        function openCheckoutModal() {
+            isCheckoutStep = true;
+            renderCartModalContent();
+            openModal();
+        }
+
+        function openModal() {
+            const modal = document.getElementById('cart-modal');
+            const drawer = document.getElementById('cart-drawer');
+            const waBtn = document.getElementById('whatsapp-float-btn');
+            
+            waBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                drawer.classList.remove('translate-x-full');
+            }, 10);
         }
 
         function closeCartModal() {
-            const modal = document.getElementById('checkoutModal');
-            modal.classList.add('hidden'); modal.classList.remove('flex');
-            document.body.classList.remove('modal-open');
+            const modal = document.getElementById('cart-modal');
+            const drawer = document.getElementById('cart-drawer');
+            const waBtn = document.getElementById('whatsapp-float-btn');
+            
+            drawer.classList.add('translate-x-full');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                isCheckoutStep = false;
+                
+                let totalItems = 0;
+                Object.keys(cart).forEach(id => { totalItems += cart[id]; });
+                
+                if (totalItems === 0) {
+                    waBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                }
+            }, 300);
         }
 
-        function buildProvinceList(filterText = '') {
-            const container = document.getElementById('provinceListContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            peruvianProvinces.forEach(group => {
-                const filteredList = group.list.filter(prov => prov.toLowerCase().includes(filterText.toLowerCase()));
-                if (filteredList.length > 0) {
-                    const regionTitle = document.createElement('div');
-                    regionTitle.className = 'text-[10px] font-black uppercase tracking-wider text-[#FE0000] px-3 py-1.5 bg-[#D9D9D9]/30 mt-2 rounded-lg border border-[#D9D9D9]';
-                    regionTitle.textContent = group.region;
-                    container.appendChild(regionTitle);
-                    filteredList.forEach(prov => {
-                        const item = document.createElement('button');
-                        item.type = 'button';
-                        item.className = 'w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold text-paletteBlack hover:bg-[#D9D9D9]/50 transition-colors flex items-center justify-between group cursor-pointer';
-                        item.innerHTML = `<span>${prov}</span> <i class="fa-solid fa-check opacity-0 group-hover:opacity-100 text-[#FE0000] text-[10px]"></i>`;
-                        item.onclick = (e) => { e.preventDefault(); selectProvince(prov); };
-                        container.appendChild(item);
-                    });
+        function renderCartModalContent() {
+            const container = document.getElementById('modal-body-content');
+            
+            let totalItems = 0;
+            let totalPrice = 0;
+            Object.keys(cart).forEach(id => {
+                const prod = products.find(p => p.id == id);
+                if (prod) {
+                    totalItems += cart[id];
+                    totalPrice += prod.price * cart[id];
                 }
+            });
+
+            if (totalItems === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-basket-shopping text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-sm font-semibold text-gray-700">Tu carrito está vacío</p>
+                        <p class="text-xs text-gray-500 mt-1">Selecciona tus tipos de arroz favoritos.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            if (!isCheckoutStep) {
+                let itemsHtml = '';
+                Object.keys(cart).forEach(id => {
+                    const prod = products.find(p => p.id == id);
+                    itemsHtml += `
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <img src="${prod.image}" class="w-12 h-12 object-cover rounded-lg bg-gray-100 border border-gray-200">
+                                <div>
+                                    <h4 class="text-xs font-bold text-black">${prod.name}</h4>
+                                    <span class="text-xs text-gray-600">S/ ${prod.price.toFixed(2)} c/u</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-1.5 bg-gray-100 rounded-full p-0.5 border border-gray-200">
+                                    <button onclick="updateQty(${prod.id}, -1); renderCartModalContent();" class="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-[10px] cursor-pointer hover:bg-gray-800">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="text-xs font-bold px-1">${cart[prod.id]}</span>
+                                    <button onclick="updateQty(${prod.id}, 1); renderCartModalContent();" class="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-[10px] cursor-pointer hover:bg-gray-800">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="space-y-2">${itemsHtml}</div>
+                    <div class="pt-4 mt-4 border-t border-gray-200 space-y-2">
+                        <div class="flex justify-between text-xs text-gray-600">
+                            <span>Subtotal</span>
+                            <span>S/ ${totalPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600">
+                            <span>Envío en Perú</span>
+                            <span class="text-black font-semibold">Calculado por WhatsApp</span>
+                        </div>
+                        <div class="flex justify-between text-base font-extrabold text-black pt-2 border-t border-gray-200">
+                            <span>Total</span>
+                            <span class="text-black">S/ ${totalPrice.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div class="pt-6">
+                        <button onclick="isCheckoutStep=true; renderCartModalContent();" class="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            <span>Continuar con Datos de Envío</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <form id="whatsapp-order-form" onsubmit="sendWhatsAppOrder(event)" class="space-y-4 pb-12">
+                        <div class="flex items-center justify-between">
+                            <button type="button" onclick="isCheckoutStep=false; renderCartModalContent();" class="text-xs font-bold text-gray-700 hover:text-black flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-arrow-left"></i> Volver al resumen
+                            </button>
+                            <span class="text-xs font-bold text-black">Paso 2 de 2</span>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Nombre y Apellidos</label>
+                            <input type="text" id="client-name" required placeholder="Ej. Juan Pérez Quispe" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs text-black focus:outline-none focus:border-black transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Dirección de Entrega</label>
+                            <input type="text" id="client-address" required placeholder="Ej. Av. Arequipa 1234, Dpto 201" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs text-black focus:outline-none focus:border-black transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Número de Teléfono (Perú 🇵🇪)</label>
+                            <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:border-black transition-colors">
+                                <div class="flex items-center space-x-1.5 px-3 py-2.5 bg-gray-100 border-r border-gray-200 text-xs font-bold text-black">
+                                    <span>🇵🇪</span>
+                                    <span>+51</span>
+                                </div>
+                                <input type="tel" id="client-phone" required maxlength="9" pattern="[0-9]{9}" placeholder="987654321" class="w-full bg-transparent px-3 py-2.5 text-xs text-black focus:outline-none">
+                            </div>
+                            <span class="text-[10px] text-gray-500 mt-1 block">Ingresa 9 dígitos de tu celular peruano.</span>
+                        </div>
+
+                        <!-- SELECTOR DE PROVINCIA PERSONALIZADO -->
+                        <div class="relative overflow-visible">
+                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Provincia de Destino</label>
+                            <div id="province-dropdown-btn" onclick="toggleProvinceDropdown(event)" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs text-black flex items-center justify-between cursor-pointer hover:border-black transition-colors">
+                                <span id="province-selected-label" class="${selectedProvince ? 'text-black font-semibold' : 'text-gray-400'}">${selectedProvince || 'Selecciona tu provincia...'}</span>
+                                <i class="fa-solid fa-chevron-down text-gray-500 text-[10px] transition-transform" id="province-chevron"></i>
+                            </div>
+
+                            <div id="province-options-container" class="hidden absolute left-0 right-0 top-[72px] bg-white border border-gray-200 rounded-xl shadow-2xl z-50 p-2">
+                                <div class="mb-2">
+                                    <input type="text" id="province-search" oninput="filterProvinces(this.value)" placeholder="Buscar provincia..." class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-black focus:outline-none focus:border-black">
+                                </div>
+                                <div id="province-list-items" class="max-h-48 overflow-y-auto space-y-1 pr-1"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-100 border border-gray-200 p-3 rounded-xl mt-4">
+                            <div class="flex justify-between text-xs font-bold text-black mb-1">
+                                <span>Total a Pagar:</span>
+                                <span>S/ ${totalPrice.toFixed(2)}</span>
+                            </div>
+                            <p class="text-[10px] text-gray-600">Al confirmar, se generará tu orden ordenada para enviarla directamente por WhatsApp.</p>
+                        </div>
+
+                        <button type="submit" class="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3.5 px-4 rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                            <span>Confirmar Pedido por WhatsApp</span>
+                        </button>
+                    </form>
+                `;
+                renderProvinceList(peruvianProvinces);
+            }
+        }
+
+        function toggleProvinceDropdown(event) {
+            if (event) event.stopPropagation();
+            const container = document.getElementById('province-options-container');
+            const chevron = document.getElementById('province-chevron');
+            container.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('province-options-container');
+            const btn = document.getElementById('province-dropdown-btn');
+            if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.add('hidden');
+                const chevron = document.getElementById('province-chevron');
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        });
+
+        function renderProvinceList(provincesArray) {
+            const listContainer = document.getElementById('province-list-items');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            if (provincesArray.length === 0) {
+                listContainer.innerHTML = `<div class="p-3 text-center text-xs text-gray-500">No se encontró la provincia</div>`;
+                return;
+            }
+
+            provincesArray.forEach(prov => {
+                const item = document.createElement('div');
+                item.className = `px-3 py-2.5 text-xs rounded-lg cursor-pointer transition-colors flex items-center justify-between ${selectedProvince === prov ? 'bg-black text-white font-bold' : 'text-gray-800 hover:bg-gray-100'}`;
+                item.innerHTML = `
+                    <span>${prov}</span>
+                    ${selectedProvince === prov ? '<i class="fa-solid fa-check text-white text-[10px]"></i>' : ''}
+                `;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    selectedProvince = prov;
+                    document.getElementById('province-selected-label').innerText = prov;
+                    document.getElementById('province-selected-label').className = 'text-black font-semibold';
+                    toggleProvinceDropdown();
+                };
+                listContainer.appendChild(item);
             });
         }
 
-        function openProvinceDropdown() {
-            const modal = document.getElementById('provinceModal');
-            if (!modal) return;
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-            const searchInput = document.getElementById('provinceSearchInput');
-            if (searchInput) searchInput.value = '';
-            buildProvinceList();
+        function filterProvinces(query) {
+            const filtered = peruvianProvinces.filter(p => p.toLowerCase().includes(query.toLowerCase()));
+            renderProvinceList(filtered);
         }
 
-        function closeProvinceDropdown() {
-            const modal = document.getElementById('provinceModal');
-            if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
-        }
-
-        function selectProvince(provinceName) {
-            document.getElementById('clientProvince').value = provinceName;
-            const textSpan = document.getElementById('selectedProvinceText');
-            if (textSpan) {
-                textSpan.textContent = provinceName;
-                textSpan.classList.remove('text-[#191919]');
-                textSpan.classList.add('text-paletteBlack', 'font-bold');
-            }
-            closeProvinceDropdown();
-        }
-
-        function openPaymentModal() {
-            const modal = document.getElementById('paymentModal');
-            if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
-        }
-
-        function closePaymentModal() {
-            const modal = document.getElementById('paymentModal');
-            if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
-        }
-
-        function selectPayment(paymentName, iconClass) {
-            document.getElementById('clientPayment').value = paymentName;
-            const textSpan = document.getElementById('selectedPaymentText');
-            if (textSpan) {
-                textSpan.innerHTML = `<span class="flex items-center gap-2"><i class="fa-solid ${iconClass} text-[#FE0000]"></i> <span class="text-paletteBlack font-bold">${paymentName}</span></span>`;
-                textSpan.classList.remove('text-[#191919]');
-            }
-            closePaymentModal();
-        }
-
-        function sendToWhatsApp(event) {
+        function sendWhatsAppOrder(event) {
             event.preventDefault();
-            const name = document.getElementById('clientName').value.trim();
-            const address = document.getElementById('clientAddress').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const province = document.getElementById('clientProvince').value;
-            const payment = document.getElementById('clientPayment').value;
+            
+            const name = document.getElementById('client-name').value.trim();
+            const address = document.getElementById('client-address').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
 
-            if (!/^[0-9]{9}$/.test(phone)) { showCustomToast('Ingresa un celular peruano de 9 dígitos'); return; }
-            if (!province) { showCustomToast('Selecciona tu provincia'); return; }
-            if (!payment) { showCustomToast('Selecciona tu método de pago'); return; }
-
-            let orderSummary = ''; let totalPrice = 0;
-            for (const [id, qty] of Object.entries(cart)) {
-                const product = products.find(p => p.id == id);
-                if (product) {
-                    const sub = product.price * qty;
-                    totalPrice += sub;
-                    orderSummary += `• ${qty}x ${product.name} - S/ ${sub.toFixed(2)}\n`;
-                }
+            if (!selectedProvince) {
+                alert("Por favor, selecciona tu provincia de destino.");
+                return;
             }
 
-            const message = `*¡NUEVO PEDIDO - TIENDOO 🇵🇪*\n\n` +
-                            `*👤 Cliente:* ${name}\n` +
-                            `*📍 Dirección:* ${address}\n` +
-                            `*🏙️ Provincia:* ${province}\n` +
-                            `*📱 Teléfono:* +51 ${phone}\n` +
-                            `*💳 Método de Pago:* ${payment}\n\n` +
-                            `*🛒 DETALLE DEL PEDIDO:*\n` +
-                            orderSummary + `\n` +
-                            `*💰 TOTAL A PAGAR: S/ ${totalPrice.toFixed(2)}*\n\n` +
-                            `_Enviado desde Tiendoo Web App_`;
+            if (phone.length !== 9 || isNaN(phone)) {
+                alert("Por favor, ingresa un número de celular peruano válido de 9 dígitos.");
+                return;
+            }
 
-            const whatsappUrl = `https://wa.me/51986389251?text=${encodeURIComponent(message)}`;
+            let orderText = `🛒 *NUEVO PEDIDO - TIENDOO* 🇵🇪\n\n`;
+            orderText += `👤 *Cliente:* ${name}\n`;
+            orderText += `📱 *Teléfono:* +51 ${phone}\n`;
+            orderText += `📍 *Dirección:* ${address}\n`;
+            orderText += `🏙️ *Provincia:* ${selectedProvince}\n\n`;
+            orderText += `📦 *DETALLE DEL PRODUCTO:* \n`;
+
+            let totalPrice = 0;
+            Object.keys(cart).forEach(id => {
+                const prod = products.find(p => p.id == id);
+                if (prod) {
+                    const subtotal = prod.price * cart[id];
+                    totalPrice += subtotal;
+                    orderText += `• ${prod.name} x ${cart[id]} und. (S/ ${subtotal.toFixed(2)})\n`;
+                }
+            });
+
+            orderText += `\n💰 *TOTAL A PAGAR: S/ ${totalPrice.toFixed(2)}*\n\n`;
+            orderText += `_Enviado desde Tiendoo Web App_`;
+
+            const encodedMessage = encodeURIComponent(orderText);
+            const whatsappUrl = `https://wa.me/51986389251?text=${encodedMessage}`;
+
             window.open(whatsappUrl, '_blank');
-
-            cart = {};
-            renderProducts(products.filter(p => p.category === currentFilter));
-            updateSummary();
-            closeCartModal();
-            document.getElementById('orderForm').reset();
-            document.getElementById('selectedProvinceText').textContent = 'Selecciona tu provincia en Perú';
-            document.getElementById('selectedPaymentText').innerHTML = 'Selecciona tu método de pago';
-            document.getElementById('selectedProvinceText').className = 'text-[#191919]';
-            document.getElementById('selectedPaymentText').className = 'text-[#191919] flex items-center gap-2';
         }
+
+        window.onload = () => {
+            renderProducts();
+        };
     </script>
 </body>
 </html>
