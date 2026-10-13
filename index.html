@@ -105,7 +105,7 @@
         <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white flex flex-col shadow-2xl transition-transform transform translate-x-full duration-300" id="cart-drawer">
             <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-gray-100">
                 <h2 class="font-extrabold text-base uppercase tracking-wider flex items-center gap-2 text-black">
-                    <i class="fa-solid fa-bag-shopping text-black"></i> Tu Pedido de Arroz
+                    <i class="fa-solid fa-bag-shopping text-black"></i> TU PEDIDO
                 </h2>
                 <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-black transition-colors cursor-pointer">
                     <i class="fa-solid fa-xmark"></i>
@@ -234,11 +234,9 @@
 
             if (totalItems > 0) {
                 checkoutBar.classList.remove('translate-y-full');
-                // Ocultar el botón de WhatsApp deslizándolo hacia abajo fuera de la pantalla
                 waBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
             } else {
                 checkoutBar.classList.add('translate-y-full');
-                // Mostrar de vuelta el botón de WhatsApp en su sitio
                 waBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
                 closeCartModal();
             }
@@ -380,7 +378,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Número de Teléfono (Perú 🇵🇪)</label>
+                            <label class="block text-xs font-bold text-black uppercase tracking-wider mb-1">Número de Teléfono</label>
                             <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:border-black transition-colors">
                                 <div class="flex items-center space-x-1.5 px-3 py-2.5 bg-gray-100 border-r border-gray-200 text-xs font-bold text-black">
                                     <span>🇵🇪</span>
@@ -388,7 +386,7 @@
                                 </div>
                                 <input type="tel" id="client-phone" required maxlength="9" pattern="[0-9]{9}" placeholder="987654321" class="w-full bg-transparent px-3 py-2.5 text-xs text-black focus:outline-none">
                             </div>
-                            <span class="text-[10px] text-gray-500 mt-1 block">Ingresa 9 dígitos de tu celular peruano.</span>
+                            <span class="text-[10px] text-gray-500 mt-1 block">Ingresa tus 9 dígitos.</span>
                         </div>
 
                         <!-- SELECTOR DE PROVINCIA PERSONALIZADO -->
